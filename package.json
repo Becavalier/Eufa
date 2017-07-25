@@ -1,0 +1,24 @@
+{
+  "name": "eufa",
+  "version": "0.0.1",
+  "description": "A low-level efficient utility functions library written in webassembly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Becavalier/Eufa.git"
+  },
+  "keywords": [
+    "webassembly",
+    "utility",
+    "library"
+  ],
+  "author": "YHSPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Becavalier/Eufa/issues"
+  },
+  "homepage": "https://github.com/Becavalier/Eufa#readme"
+}
