@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <container></container>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import Container from './components/Container'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    Container
+  },
+  created () {
+      // console.log(Eufa)
   }
 }
+
 </script>
 
 <style>
