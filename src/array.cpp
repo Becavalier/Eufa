@@ -8,6 +8,11 @@ extern "C" {
         return x + y;
     }
 
+
+    double EMSCRIPTEN_KEEPALIVE add (double x, double y) {
+        return x + y;
+    }
+
 #ifdef __cplusplus
 }
 #endif

@@ -71,6 +71,7 @@ window.Eufa.init.fetchWebAssemblyModuleBytes = function (url) {
     };
 
     var fetchAndInstantiate = function fetchAndInstantiate() {
+        console.info('[Eufa] Retriving WebAssembly module from remote server.');
         return fetch(url).then(function (response) {
             return response.arrayBuffer();
         });
