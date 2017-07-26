@@ -17,3 +17,22 @@ npm run test
 * Node
 * NPM
 * Emsdk
+
+### Classes
+
+* Math
+> i64_add<int, int>
+
+> f64_add<double, double>
+
+> i64_minus<int, int>
+
+> f64_minus<double, double>
+
+> i64_multiply<int, int>
+
+> f64_multiply<double, double>
+
+> i64_divide<int, int>
+
+> f64_divide<double, double>
