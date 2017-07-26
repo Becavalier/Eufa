@@ -66,6 +66,7 @@ window.Eufa.init.fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION, i
     }
 
     let fetchAndInstantiate = () => {
+        console.info(`[Eufa] Retriving WebAssembly module from remote server.`)
         return fetch(url).then(response => response.arrayBuffer())
     }
 
