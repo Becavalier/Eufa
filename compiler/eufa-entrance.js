@@ -1,0 +1,100 @@
+// Global
+window.Eufa = {};
+window.Module = {};
+
+// Version
+const EUFA_VERSION = '1';
+
+// Utilities
+window.Eufa.init = {};
+window.Eufa.init.fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION, importObject = {}) => {
+    const dbName = 'eufa-cache-db';
+    const storeName = 'eufa-cache-store';
+
+    let openDatabase = () => {
+        return new Promise((resolve, reject) => {
+            if (!window.indexedDB) {
+                reject('[Eufa] Failed in opening cache database, not support indexedDB.');
+            }
+
+            let request = indexedDB.open(dbName, dbVersion);
+            request.onerror = err => {
+                reject('[Eufa] Failed in opening cache database.');
+            };
+            request.onsuccess = () => {
+                resolve(request.result)
+            };
+            request.onupgradeneeded = event => {
+                let db = request.result;
+                if (db.objectStoreNames.contains(storeName)) {
+                    console.info(`[Eufa] Clearing out cache db, version '${event.oldVersion}'.`);
+                    db.deleteObjectStore(storeName);
+                }
+                console.info(`[Eufa] Creating cache db, version '${event.newVersion}'.`);
+                db.createObjectStore(storeName)
+            };
+        });
+    }
+
+    let lookupInDatabase = (db) => {
+        return new Promise((resolve, reject) => {
+            let store = db.transaction([storeName]).objectStore(storeName);
+            let request = store.get(url);
+            request.onerror = err => {
+                reject(`[Eufa] Failed in retriving WebAssembly module via '${url}'`);
+            };
+            request.onsuccess = event => {
+                if (request.result) {
+                    console.info('[Eufa] Succeed in reusing WebAssembly module cached in db.')
+                    resolve(request.result);
+                } else {
+                    reject(`[Eufa] WebAssembly module '${url}' was not found!`);
+                }
+            };
+        });
+    }
+
+    let storeInDatabase = (db, bytes) => {
+        let store = db.transaction([storeName], 'readwrite').objectStore(storeName);
+        let request = store.put(bytes, url);
+        request.onerror = err => {
+            console.error(`[Eufa] Failed in storing WebAssembly cache: ${err}!`)
+        };
+        request.onsuccess = err => {
+            console.info(`[Eufa] Succeed in storing WebAssembly cache.`)
+        };
+    }
+
+    let fetchAndInstantiate = () => {
+        return fetch(url).then(response => response.arrayBuffer())
+    }
+
+    return openDatabase().then(db => {
+        return lookupInDatabase(db).then(bytes => {
+            return bytes;
+        }, err => {
+            console.error(err);
+            return fetchAndInstantiate().then(bytes => {
+                storeInDatabase(db, bytes);
+                return bytes;
+            });
+        })
+    }, err => {
+        console.error(err);
+        return fetchAndInstantiate().then(bytes => {
+            return bytes;
+        });
+    });
+}
+
+// Mount to global window object
+window.Eufa.init.install = (wasmSrc, jsSrc, callback) => {
+    window.Eufa.init.fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(bytes => {
+        Module.wasmBinary = bytes;
+        let script = document.createElement('script');
+        script.src = jsSrc;
+        document.body.appendChild(script);
+    });
+
+    window._EufaLoadedCallback = callback;
+};

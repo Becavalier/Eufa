@@ -1,19 +1,29 @@
 <template>
   <div id="app">
-    <container></container>
+    <span>Eufa.add({{ add.params.x }}, {{ add.params.y }}): {{ add.result }}</span>
   </div>
 </template>
 
 <script>
-import Container from './components/Container'
-
 export default {
   name: 'app',
-  components: {
-    Container
+  data () {
+    return {
+      eufa: null,
+      add: {
+        params: {
+          x: 10,
+          y: 20
+        },
+        result: ''
+      }
+    }
   },
   created () {
-      // console.log(Eufa)
+    window.Eufa.init.install('static/eufa.wasm', 'static/eufa.js', () => {
+      // Call directly
+      this.add.result = window.Eufa.add(this.add.params.x, this.add.params.y)
+    })
   }
 }
 

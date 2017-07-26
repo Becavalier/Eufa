@@ -7,7 +7,9 @@
 
 using namespace std;
 
-int add (int x, int y);
+extern "C" {
+    extern int add (int x, int y);
+}
 
 
 #endif
