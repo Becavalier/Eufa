@@ -30,7 +30,7 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    emcc -s WASM=1 -O3 -o dist/eufa.js src/build.cpp $_TSTRING
+    emcc -s WASM=1 -O3 -o dist/eufa.js src/build.cc $_TSTRING
 else
     echo "[Eufa] Command 'emcc' not found, please install 'emsdk' first."
     exit 1
