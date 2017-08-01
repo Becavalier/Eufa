@@ -6,7 +6,7 @@ const ora = require('ora');
 const chalk = require('chalk');
 
 // Launch chrome in headless mode;
-var spinner = ora('[Eufa] Calculating for benchmark...');
+var spinner = ora('[Eufa] calculating for benchmark...');
 spinner.start();
 
 chromeLauncher.launch({
@@ -1810,49 +1810,46 @@ chromeLauncher.launch({
                                       run();
                                       __ATPOSTRUN__.push(() => {
                                           let i64_add = Module.cwrap("i64_add", "number", ["number", "number"]);
-                                          let f64_add = Module.cwrap("f64_add", "number", ["number", "number"]);
                                           let i64_minus = Module.cwrap("i64_minus", "number", ["number", "number"]);
-                                          let f64_minus = Module.cwrap("f64_minus", "number", ["number", "number"]);
                                           let i64_multiply = Module.cwrap("i64_multiply", "number", ["number", "number"]);
-                                          let f64_multiply = Module.cwrap("f64_multiply", "number", ["number", "number"]);
                                           let i64_divide = Module.cwrap("i64_divide", "number", ["number", "number"]);
-                                          let f64_divide = Module.cwrap("f64_divide", "number", ["number", "number"]);
+         
                                           
-                                          let i_test2operands = (method, times = 10e+6) => {
+                                          let i_test2operands = (method, times = 1e+7) => {
                                               let startTime = new Date().getTime();
                                               for (let j = 0; j < times; j++) {
-                                                  let _x = Math.round(Math.random() * 100);
-                                                  let _y = Math.round(Math.random() * 100);
-                                                  method(_x, _y);
+                                                  let _x = Math.round(Math.random() * 1e+7) + 1;
+                                                  let _y = Math.round(Math.random() * 1e+7) + 1;
+                                                  method(_x, _y)
                                               }
-                                              return (new Date().getTime() - startTime) / 1000 + 's';
+                                              return (new Date().getTime() - startTime) / 1000;
                                           }
                                           
                                           
                                           var data = [
                                               { 
-                                                  method: 'i64_add ／ +', 
-                                                  times: 10e+7,
-                                                  nativeResult: i_test2operands((x, y) => { return x + y; }, 10e+7), 
-                                                  wasmResult: i_test2operands(i64_add, 10e+7) 
+                                                  method: 'i64_add／+', 
+                                                  times: '1e+7',
+                                                  nativeResult: i_test2operands((x, y) => { return x + y; }), 
+                                                  wasmResult: i_test2operands(i64_add) 
                                               },
                                               { 
-                                                  method: 'i64_minus ／ -', 
-                                                  times: 10e+7,
-                                                  nativeResult: i_test2operands((x, y) => { return x - y; }, 10e+7), 
-                                                  wasmResult: i_test2operands(i64_minus, 10e+7) 
+                                                  method: 'i64_minus／-', 
+                                                  times: '1e+7',
+                                                  nativeResult: i_test2operands((x, y) => { return x - y; }), 
+                                                  wasmResult: i_test2operands(i64_minus) 
                                               },
                                               { 
-                                                  method: 'i64_multiply ／ *', 
-                                                  times: 10e+7,
-                                                  nativeResult: i_test2operands((x, y) => { return x * y; }, 10e+7), 
-                                                  wasmResult: i_test2operands(i64_multiply, 10e+7) 
+                                                  method: 'i64_multiply／*', 
+                                                  times: '1e+7',
+                                                  nativeResult: i_test2operands((x, y) => { return x * y; }), 
+                                                  wasmResult: i_test2operands(i64_multiply) 
                                               },
                                               { 
-                                                  method: 'i64_divide ／ /', 
-                                                  times: 10e+7,
-                                                  nativeResult: i_test2operands((x, y) => { return x / y; }, 10e+7), 
-                                                  wasmResult: i_test2operands(i64_divide, 10e+7) 
+                                                  method: 'i64_divide／/', 
+                                                  times: '1e+7',
+                                                  nativeResult: i_test2operands((x, y) => { return x / y; }), 
+                                                  wasmResult: i_test2operands(i64_divide) 
                                               }
                                            ];
                                            
@@ -1869,17 +1866,20 @@ chromeLauncher.launch({
                         data.forEach(function(item) {
                             table.cell('Methods', item.method);
                             table.cell('Times', item.times);
-                            table.cell('Native', item.nativeResult);
-                            table.cell('WebAssembly', item.wasmResult);
+                            table.cell('Native(s)', item.nativeResult);
+                            table.cell('WebAssembly(s)', item.wasmResult);
                             table.newRow();
                         });
-                        spinner.succeed('[Eufa] Calculating for benchmark... done\n');
+                        chrome.kill();
+                        spinner.succeed('[Eufa] calculating for benchmark... done\n');
                         // Print result;
                         console.log(table.toString());
-                        chrome.kill();
+                        // Exit current pricess;
+                        process.exit(0);
                     }).catch(err => {
-                        spinner.fail(err);
                         chrome.kill();
+                        spinner.fail(err);
+                        process.exit(1);
                     });
                 });
             }
