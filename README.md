@@ -1,5 +1,5 @@
 # Eufa
-A low-level efficient utility functions library written in webassembly.
+A low-level high-efficient utility functions library written in webassembly.
 
 ### Pre-requisite
 
@@ -8,20 +8,24 @@ Install Emscripten SDK from official installing [website](https://kripken.github
 
 ### Build
 ```shell
-# Install dependencies
+# Install dependencies;
 npm install
 
 # Build
-npm run build
+npm run build;
 
-# Run test
+# Run test;
 npm run test
+
+# Run benchmark test;
+npm run benchmark
 ```
 
 ### Dependencies
-* Node
-* NPM
-* Emsdk
+* Chrome v58+
+* Node v8.2.1
+* NPM v5.3.0
+* Emsdk (emscripten v1.37.13)
 
 ### Classes
 
