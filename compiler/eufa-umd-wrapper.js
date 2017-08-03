@@ -1,13 +1,11 @@
 // Global
-window.Eufa = {};
-window.Module = {};
+let Eufa = {};
 
 // Version
 const EUFA_VERSION = '1';
 
 // Utilities
-window.Eufa.init = {};
-window.Eufa.init.fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION, importObject = {}) => {
+let fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION) => {
     const dbName = 'eufa-cache-db';
     const storeName = 'eufa-cache-store';
 
@@ -88,14 +86,13 @@ window.Eufa.init.fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION, i
     });
 }
 
-// Mount to global window object
-window.Eufa.init.install = (wasmSrc, jsSrc, callback) => {
-    window.Eufa.init.fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(bytes => {
+// Mount
+Eufa.init = (wasmSrc, callback) => {
+    fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(bytes => {
+        let Module = {};
         Module.wasmBinary = bytes;
-        let script = document.createElement('script');
-        script.src = jsSrc;
-        document.body.appendChild(script);
+        // [ REPLACEMENT_PLACEHOLDER ]
     });
-
-    window._EufaLoadedCallback = callback;
 };
+
+export default Eufa;

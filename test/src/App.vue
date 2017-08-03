@@ -8,11 +8,15 @@
     <span>Eufa.Math.i64_multiply({{ i64_multiply.params.x }}, {{ i64_multiply.params.y }}): {{ i64_multiply.result }}</span><br/>
     <span>Eufa.Math.f64_multiply({{ f64_multiply.params.x }}, {{ f64_multiply.params.y }}): {{ f64_multiply.result }}</span><br/>
     <span>Eufa.Math.i64_divide({{ i64_divide.params.y }}, {{ i64_divide.params.x }}): {{ i64_divide.result }}</span><br/>
-    <span>Eufa.Math.f64_divide({{ f64_divide.params.x }}, {{ f64_divide.params.y }}): {{ f64_divide.result }}</span>
+    <span>Eufa.Math.f64_divide({{ f64_divide.params.x }}, {{ f64_divide.params.y }}): {{ f64_divide.result }}</span><br/>
+    <span>Eufa.Math.i64_abs({{ i64_abs.params.x }}): {{ i64_abs.result }}</span><br/>
+    <span>Eufa.Math.f64_abs({{ f64_abs.params.x }}): {{ f64_abs.result }}</span>
   </div>
 </template>
 
 <script>
+import eufa from 'eufa'
+
 export default {
   name: 'app',
   data () {
@@ -73,24 +77,39 @@ export default {
           y: 20.2
         },
         result: ''
+      },
+      i64_abs: {
+        params: {
+          x: -10
+        },
+        result: ''
+      },
+      f64_abs: {
+        params: {
+          x: -10.1
+        },
+        result: ''
       }
     }
   },
   created () {
-    window.Eufa.init.install('static/eufa.wasm', 'static/eufa.js', () => {
+    eufa.init('static/eufa-module.wasm', () => {
       // Call directly
       // Math.add
-      this.i64_add.result = window.Eufa.Math.i64_add(this.i64_add.params.x, this.i64_add.params.y)
-      this.f64_add.result = window.Eufa.Math.f64_add(this.f64_add.params.x, this.f64_add.params.y)
+      this.i64_add.result = eufa.Math.i64_add(this.i64_add.params.x, this.i64_add.params.y)
+      this.f64_add.result = eufa.Math.f64_add(this.f64_add.params.x, this.f64_add.params.y)
       // Math.minus
-      this.i64_minus.result = window.Eufa.Math.i64_minus(this.i64_minus.params.x, this.i64_minus.params.y)
-      this.f64_minus.result = window.Eufa.Math.f64_minus(this.f64_minus.params.x, this.f64_minus.params.y)
+      this.i64_minus.result = eufa.Math.i64_minus(this.i64_minus.params.x, this.i64_minus.params.y)
+      this.f64_minus.result = eufa.Math.f64_minus(this.f64_minus.params.x, this.f64_minus.params.y)
       // Math.multiply
-      this.i64_multiply.result = window.Eufa.Math.i64_multiply(this.i64_multiply.params.x, this.i64_multiply.params.y)
-      this.f64_multiply.result = window.Eufa.Math.f64_multiply(this.f64_multiply.params.x, this.f64_multiply.params.y)
+      this.i64_multiply.result = eufa.Math.i64_multiply(this.i64_multiply.params.x, this.i64_multiply.params.y)
+      this.f64_multiply.result = eufa.Math.f64_multiply(this.f64_multiply.params.x, this.f64_multiply.params.y)
       // Math.divide
-      this.i64_divide.result = window.Eufa.Math.i64_divide(this.i64_divide.params.y, this.i64_divide.params.x)
-      this.f64_divide.result = window.Eufa.Math.f64_divide(this.f64_divide.params.x, this.f64_divide.params.y)
+      this.i64_divide.result = eufa.Math.i64_divide(this.i64_divide.params.y, this.i64_divide.params.x)
+      this.f64_divide.result = eufa.Math.f64_divide(this.f64_divide.params.x, this.f64_divide.params.y)
+      // Math.abs
+      this.i64_abs.result = eufa.Math.i64_abs(this.i64_abs.params.x)
+      this.f64_abs.result = eufa.Math.f64_abs(this.f64_abs.params.x)
     })
   }
 }

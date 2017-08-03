@@ -36,6 +36,14 @@ extern "C" {
         return x / y;
     }
 
+    int EMSCRIPTEN_KEEPALIVE i64_abs (int x) {
+        return abs(x);
+    }
+
+    double EMSCRIPTEN_KEEPALIVE f64_abs (double x) {
+        return fabs(x);
+    }
+
 #ifdef __cplusplus
 }
 #endif

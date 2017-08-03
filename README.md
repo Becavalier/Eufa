@@ -25,6 +25,7 @@ npm run benchmark
 * Chrome v58 or higher (headless supported)
 * Node v8.2.1
 * NPM v5.3.0
+* Gulp v3.9.1
 * Emsdk (emscripten v1.37.13)
 
 ### Classes

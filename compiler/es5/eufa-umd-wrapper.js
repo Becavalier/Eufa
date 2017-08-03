@@ -1,17 +1,17 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 // Global
-window.Eufa = {};
-window.Module = {};
+var Eufa = {};
 
 // Version
 var EUFA_VERSION = '1';
 
 // Utilities
-window.Eufa.init = {};
-window.Eufa.init.fetchWebAssemblyModuleBytes = function (url) {
+var fetchWebAssemblyModuleBytes = function fetchWebAssemblyModuleBytes(url) {
     var dbVersion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : EUFA_VERSION;
-    var importObject = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var dbName = 'eufa-cache-db';
     var storeName = 'eufa-cache-store';
@@ -95,14 +95,13 @@ window.Eufa.init.fetchWebAssemblyModuleBytes = function (url) {
     });
 };
 
-// Mount to global window object
-window.Eufa.init.install = function (wasmSrc, jsSrc, callback) {
-    window.Eufa.init.fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(function (bytes) {
+// Mount
+Eufa.init = function (wasmSrc, callback) {
+    fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(function (bytes) {
+        var Module = {};
         Module.wasmBinary = bytes;
-        var script = document.createElement('script');
-        script.src = jsSrc;
-        document.body.appendChild(script);
+        // [ REPLACEMENT_PLACEHOLDER ]
     });
-
-    window._EufaLoadedCallback = callback;
 };
+
+exports.default = Eufa;
