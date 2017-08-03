@@ -84,6 +84,6 @@ gulp.task('test', ['reset'], () => {
         exec('cd test && npm run dev', function (err, stdout, stderr) {
             console.log(stdout);
             console.error(stderr);
-        });
+        }).stdout.pipe(process.stdout);
     });
 });

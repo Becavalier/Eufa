@@ -1,5 +1,5 @@
 // Alias
-for (var key in Module) {
+for (let key in Module) {
     if (Module.hasOwnProperty(key)) {
         Eufa[key] = Module[key];
     }
