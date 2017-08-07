@@ -21,11 +21,11 @@ extern "C" {
     extern int i64_divide (int x, int y);
     extern double f64_divide (double x, double y);
 
-    extern int i64_abs (int x);
-    extern double f64_abs (double x);
+    extern unsigned int i64_abs (int number);
+    extern double f64_abs (double number);
 
-    extern int i64_max (int* x);
-    extern double f64_max (double* x);
+    extern unsigned int i64_sqrt (unsigned int number);
+    extern double f64_sqrt (double number);
 }
 
 

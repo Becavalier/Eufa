@@ -10,12 +10,11 @@ var spinner = ora('[Eufa] calculating for benchmark...');
 spinner.start();
 
 chromeLauncher.launch({
-    chromeFlags: ['--headless'],
     port: 9222
 }).then(chrome => {
     CDP(client => {
         const { Runtime } = client;
-        const wasmPath = './dist/eufa.wasm';
+        const wasmPath = './dist/eufa-module.wasm';
         fs.stat(wasmPath, (err, stats) => {
             if (stats.isFile()) {
                 fs.readFile(wasmPath, (err, data) => {
@@ -1605,6 +1604,9 @@ chromeLauncher.launch({
                                       var _i64_add = Module["_i64_add"] = (function() {
                                           return Module["asm"]["_i64_add"].apply(null, arguments)
                                       });
+                                      var _i64_sqrt = Module["_i64_sqrt"] = (function() {
+                                          return Module["asm"]["_i64_sqrt"].apply(null, arguments)
+                                      });
                                       var stackRestore = Module["stackRestore"] = (function() {
                                           return Module["asm"]["stackRestore"].apply(null, arguments)
                                       });
@@ -1809,53 +1811,89 @@ chromeLauncher.launch({
                                       }
                                       run();
                                       __ATPOSTRUN__.push(() => {
-                                          let i64_add = Module.cwrap("i64_add", "number", ["number", "number"]);
-                                          let i64_minus = Module.cwrap("i64_minus", "number", ["number", "number"]);
-                                          let i64_multiply = Module.cwrap("i64_multiply", "number", ["number", "number"]);
-                                          let i64_divide = Module.cwrap("i64_divide", "number", ["number", "number"]);
-         
                                           
-                                          let i_test2operands = (method, times = 1e+7) => {
+                                          let i64_add = Module["asm"]["_i64_add"];
+                                          let i64_minus = Module["asm"]["_i64_minus"];
+                                          let i64_multiply = Module["asm"]["_i64_multiply"];
+                                          let i64_divide = Module["asm"]["_i64_divide"]
+                                          let i64_sqrt = Module["asm"]["_i64_sqrt"];
+                                          let f64_sqrt = Module["asm"]["_f64_sqrt"];
+        
+                                          let i_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
                                               let startTime = new Date().getTime();
                                               for (let j = 0; j < times; j++) {
-                                                  let _x = Math.round(Math.random() * 1e+7) + 1;
-                                                  let _y = Math.round(Math.random() * 1e+7) + 1;
-                                                  method(_x, _y)
+                                                  let _x = Math.abs(Math.round(Math.random() * 1e+7)) + 1;
+                                                  let _y = Math.abs(Math.round(Math.random() * 1e+7)) + 1;
+                                                  if (operandCount === 1) {
+                                                      method(_x);
+                                                  }
+                                                  if (operandCount === 2) {
+                                                      method(_x, _y);
+                                                  }
                                               }
                                               return (new Date().getTime() - startTime) / 1000;
                                           }
                                           
-                                          
+                                          let f_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
+                                              let startTime = new Date().getTime();
+                                              for (let j = 0; j < times; j++) {
+                                                  let _x = (Math.abs(Math.round(Math.random() * 1e+12)) + 1) / 1e+4;
+                                                  let _y = (Math.abs(Math.round(Math.random() * 1e+12)) + 1) / 1e+4;
+                                                  
+                                                  if (operandCount === 1) {
+                                                      method(_x);
+                                                  }
+                                                  if (operandCount === 2) {
+                                                      method(_x, _y);
+                                                  }
+                                              }
+                                              return (new Date().getTime() - startTime) / 1000;
+                                          }
+                                         
                                           var data = [
                                               { 
                                                   method: 'i64_add／+', 
                                                   times: '1e+7',
-                                                  nativeResult: i_test2operands((x, y) => { return x + y; }), 
-                                                  wasmResult: i_test2operands(i64_add) 
+                                                  nativeResult: i_testWithOperands((x, y) => { return x + y; }), 
+                                                  wasmResult: i_testWithOperands(i64_add) 
                                               },
                                               { 
                                                   method: 'i64_minus／-', 
                                                   times: '1e+7',
-                                                  nativeResult: i_test2operands((x, y) => { return x - y; }), 
-                                                  wasmResult: i_test2operands(i64_minus) 
+                                                  nativeResult: i_testWithOperands((x, y) => { return x - y; }), 
+                                                  wasmResult: i_testWithOperands(i64_minus) 
                                               },
                                               { 
                                                   method: 'i64_multiply／*', 
                                                   times: '1e+7',
-                                                  nativeResult: i_test2operands((x, y) => { return x * y; }), 
-                                                  wasmResult: i_test2operands(i64_multiply) 
+                                                  nativeResult: i_testWithOperands((x, y) => { return x * y; }), 
+                                                  wasmResult: i_testWithOperands(i64_multiply) 
                                               },
                                               { 
                                                   method: 'i64_divide／/', 
                                                   times: '1e+7',
-                                                  nativeResult: i_test2operands((x, y) => { return x / y; }), 
-                                                  wasmResult: i_test2operands(i64_divide) 
+                                                  nativeResult: i_testWithOperands((x, y) => { return x / y; }), 
+                                                  wasmResult: i_testWithOperands(i64_divide) 
+                                              },
+                                              { 
+                                                  method: 'i64_sqrt／Math.sqrt', 
+                                                  times: '1e+7',
+                                                  nativeResult: i_testWithOperands(x => { return Math.sqrt(x); }, 1), 
+                                                  wasmResult: i_testWithOperands(i64_sqrt, 1) 
+                                              },
+                                              { 
+                                                  method: 'f64_sqrt／Math.sqrt', 
+                                                  times: '1e+7',
+                                                  nativeResult: f_testWithOperands(x => { return Math.sqrt(x); }, 1), 
+                                                  wasmResult: f_testWithOperands(f64_sqrt, 1) 
                                               }
                                            ];
                                            
                                           resolve(JSON.stringify(data));
                                       });
-                                  })`;
+                                  }).catch(err => {
+                                      reject(err);
+                                  });`;
 
                     Runtime.evaluate({
                         expression: code,
@@ -1866,8 +1904,9 @@ chromeLauncher.launch({
                         data.forEach(function(item) {
                             table.cell('Methods', item.method);
                             table.cell('Times', item.times);
-                            table.cell('Native(s)', item.nativeResult);
                             table.cell('WebAssembly(s)', item.wasmResult);
+                            table.cell('Native(s)', item.nativeResult);
+                            table.cell('Percent(%)', (100 * (item.nativeResult - item.wasmResult) / item.nativeResult).toFixed(5));
                             table.newRow();
                         });
                         chrome.kill();

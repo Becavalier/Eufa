@@ -1,24 +1,28 @@
-'use strict';
-
-// Alias
-for (var key in Module) {
-    if (Module.hasOwnProperty(key)) {
-        Eufa[key] = Module[key];
-    }
-}
-
-// Wrapper
-Eufa.Math = {};
-Eufa.Math.i64_add = Eufa.cwrap('i64_add', 'number', ['number', 'number']);
-Eufa.Math.f64_add = Eufa.cwrap('f64_add', 'number', ['number', 'number']);
-Eufa.Math.i64_minus = Eufa.cwrap('i64_minus', 'number', ['number', 'number']);
-Eufa.Math.f64_minus = Eufa.cwrap('f64_minus', 'number', ['number', 'number']);
-Eufa.Math.i64_multiply = Eufa.cwrap('i64_multiply', 'number', ['number', 'number']);
-Eufa.Math.f64_multiply = Eufa.cwrap('f64_multiply', 'number', ['number', 'number']);
-Eufa.Math.i64_divide = Eufa.cwrap('i64_divide', 'number', ['number', 'number']);
-Eufa.Math.f64_divide = Eufa.cwrap('f64_divide', 'number', ['number', 'number']);
-Eufa.Math.i64_abs = Eufa.cwrap('i64_abs', 'number', ['number']);
-Eufa.Math.f64_abs = Eufa.cwrap('f64_abs', 'number', ['number']);
+"use strict";
 
 // Push callback into execution queue
-__ATPOSTRUN__.push(callback);
+__ATPOSTRUN__.push(function () {
+    // Alias
+    for (var key in Module) {
+        if (Module.hasOwnProperty(key)) {
+            Eufa[key] = Module[key];
+        }
+    }
+
+    // Wrapper
+    Eufa.Math = {};
+    Eufa.Math.i64_add = Module["asm"]["_i64_add"];
+    Eufa.Math.f64_add = Module["asm"]["_f64_add"];
+    Eufa.Math.i64_minus = Module["asm"]["_i64_minus"];
+    Eufa.Math.f64_minus = Module["asm"]["_f64_minus"];
+    Eufa.Math.i64_multiply = Module["asm"]["_i64_multiply"];
+    Eufa.Math.f64_multiply = Module["asm"]["_f64_multiply"];
+    Eufa.Math.i64_divide = Module["asm"]["_i64_divide"];
+    Eufa.Math.f64_divide = Module["asm"]["_f64_divide"];
+    Eufa.Math.i64_abs = Module["asm"]["_i64_abs"];
+    Eufa.Math.f64_abs = Module["asm"]["_f64_abs"];
+    Eufa.Math.i64_sqrt = Module["asm"]["_i64_sqrt"];
+    Eufa.Math.f64_sqrt = Module["asm"]["_f64_sqrt"];
+
+    callback && callback();
+});

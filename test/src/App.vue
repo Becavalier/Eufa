@@ -1,20 +1,22 @@
 <template>
   <div id="app">
     <h1>Eufa</h1>
-    <h4>A low-level efficient utility functions library written in webassembly.</h4>
+    <h4>A low-level high efficient utility functions library written in webassembly.</h4>
     <br/>
     <div>
       <h3>Math</h3>
-      <span>Eufa.Math.i64_add({{ i64_add.params.x }}, {{ i64_add.params.y }}): {{ i64_add.result }}</span><br/>
-      <span>Eufa.Math.f64_add({{ f64_add.params.x }}, {{ f64_add.params.y }}): {{ f64_add.result }}</span><br/>
-      <span>Eufa.Math.i64_minus({{ i64_minus.params.x }}, {{ i64_minus.params.y }}): {{ i64_minus.result }}</span><br/>
-      <span>Eufa.Math.f64_minus({{ f64_minus.params.x }}, {{ f64_minus.params.y }}): {{ f64_minus.result }}</span><br/>
-      <span>Eufa.Math.i64_multiply({{ i64_multiply.params.x }}, {{ i64_multiply.params.y }}): {{ i64_multiply.result }}</span><br/>
-      <span>Eufa.Math.f64_multiply({{ f64_multiply.params.x }}, {{ f64_multiply.params.y }}): {{ f64_multiply.result }}</span><br/>
-      <span>Eufa.Math.i64_divide({{ i64_divide.params.y }}, {{ i64_divide.params.x }}): {{ i64_divide.result }}</span><br/>
-      <span>Eufa.Math.f64_divide({{ f64_divide.params.x }}, {{ f64_divide.params.y }}): {{ f64_divide.result }}</span><br/>
-      <span>Eufa.Math.i64_abs({{ i64_abs.params.x }}): {{ i64_abs.result }}</span><br/>
-      <span>Eufa.Math.f64_abs({{ f64_abs.params.x }}): {{ f64_abs.result }}</span>
+      <span>Eufa.Math.i64_add({{ params.i_x }}, {{ params.i_y }}): {{ i64_add }}</span><br/>
+      <span>Eufa.Math.f64_add({{ params.f_x }}, {{ params.f_y }}): {{ f64_add }}</span><br/>
+      <span>Eufa.Math.i64_minus({{ params.i_x }}, {{ params.i_y }}): {{ i64_minus }}</span><br/>
+      <span>Eufa.Math.f64_minus({{ params.f_x }}, {{ params.f_y }}): {{ f64_minus }}</span><br/>
+      <span>Eufa.Math.i64_multiply({{ params.i_x }}, {{ params.i_y }}): {{ i64_multiply }}</span><br/>
+      <span>Eufa.Math.f64_multiply({{ params.f_x }}, {{ params.f_y }}): {{ f64_multiply }}</span><br/>
+      <span>Eufa.Math.i64_divide({{ params.i_x }}, {{ params.i_y }}): {{ i64_divide }}</span><br/>
+      <span>Eufa.Math.f64_divide({{ params.f_x }}, {{ params.f_y }}): {{ f64_divide }}</span><br/>
+      <span>Eufa.Math.i64_abs({{ params.ni_x }}): {{ i64_abs }}</span><br/>
+      <span>Eufa.Math.f64_abs({{ params.nf_x }}): {{ f64_abs }}</span><br/>
+      <span>Eufa.Math.i64_sqrt({{ params.i_x }}): {{ i64_sqrt }}</span><br/>
+      <span>Eufa.Math.f64_sqrt({{ params.f_x }}): {{ f64_sqrt }}</span><br/>
     </div>
   </div>
 </template>
@@ -27,94 +29,52 @@ export default {
   data () {
     return {
       eufa: null,
-      i64_add: {
-        params: {
-          x: 10,
-          y: 20
-        },
-        result: ''
+      params: {
+        i_x: 10,
+        i_y: 20,
+        f_x: 11.5,
+        f_y: 22.5,
+        ni_x: -10,
+        ni_y: -20,
+        nf_x: -11.5,
+        nf_y: -22.5
       },
-      f64_add: {
-        params: {
-          x: 10.1,
-          y: 20.2
-        },
-        result: ''
-      },
-      i64_minus: {
-        params: {
-          x: 10,
-          y: 20
-        },
-        result: ''
-      },
-      f64_minus: {
-        params: {
-          x: 10.1,
-          y: 20.2
-        },
-        result: ''
-      },
-      i64_multiply: {
-        params: {
-          x: 10,
-          y: 20
-        },
-        result: ''
-      },
-      f64_multiply: {
-        params: {
-          x: 10.1,
-          y: 20.2
-        },
-        result: ''
-      },
-      i64_divide: {
-        params: {
-          x: 10,
-          y: 20
-        },
-        result: ''
-      },
-      f64_divide: {
-        params: {
-          x: 10.1,
-          y: 20.2
-        },
-        result: ''
-      },
-      i64_abs: {
-        params: {
-          x: -10
-        },
-        result: ''
-      },
-      f64_abs: {
-        params: {
-          x: -10.1
-        },
-        result: ''
-      }
+      i64_add: '',
+      f64_add: '',
+      i64_minus: '',
+      f64_minus: '',
+      i64_multiply: '',
+      f64_multiply: '',
+      i64_divide: '',
+      f64_divide: '',
+      i64_abs: '',
+      f64_abs: '',
+      i64_sqrt: '',
+      f64_sqrt: ''
     }
   },
   created () {
     eufa.init('static/eufa-module.wasm', () => {
+      console.log(eufa)
       // Call directly
       // Math.add
-      this.i64_add.result = eufa.Math.i64_add(this.i64_add.params.x, this.i64_add.params.y)
-      this.f64_add.result = eufa.Math.f64_add(this.f64_add.params.x, this.f64_add.params.y)
+      this.i64_add = eufa.Math.i64_add(this.params.i_x, this.params.i_y)
+      this.f64_add = eufa.Math.f64_add(this.params.f_x, this.params.f_y)
       // Math.minus
-      this.i64_minus.result = eufa.Math.i64_minus(this.i64_minus.params.x, this.i64_minus.params.y)
-      this.f64_minus.result = eufa.Math.f64_minus(this.f64_minus.params.x, this.f64_minus.params.y)
+      this.i64_minus = eufa.Math.i64_minus(this.params.i_x, this.params.i_y)
+      this.f64_minus = eufa.Math.f64_minus(this.params.f_x, this.params.f_y)
       // Math.multiply
-      this.i64_multiply.result = eufa.Math.i64_multiply(this.i64_multiply.params.x, this.i64_multiply.params.y)
-      this.f64_multiply.result = eufa.Math.f64_multiply(this.f64_multiply.params.x, this.f64_multiply.params.y)
+      this.i64_multiply = eufa.Math.i64_multiply(this.params.i_x, this.params.i_y)
+      this.f64_multiply = eufa.Math.f64_multiply(this.params.f_x, this.params.f_y)
       // Math.divide
-      this.i64_divide.result = eufa.Math.i64_divide(this.i64_divide.params.y, this.i64_divide.params.x)
-      this.f64_divide.result = eufa.Math.f64_divide(this.f64_divide.params.x, this.f64_divide.params.y)
+      this.i64_divide = eufa.Math.i64_divide(this.params.i_y, this.params.i_x)
+      this.f64_divide = eufa.Math.f64_divide(this.params.f_x, this.params.f_y)
       // Math.abs
-      this.i64_abs.result = eufa.Math.i64_abs(this.i64_abs.params.x)
-      this.f64_abs.result = eufa.Math.f64_abs(this.f64_abs.params.x)
+      this.i64_abs = eufa.Math.i64_abs(this.params.ni_x)
+      this.f64_abs = eufa.Math.f64_abs(this.params.nf_x)
+      // Math.sqrt
+      this.i64_sqrt = eufa.Math.i64_sqrt(this.params.i_x)
+      this.f64_sqrt = eufa.Math.f64_sqrt(this.params.f_x)
     })
   }
 }
