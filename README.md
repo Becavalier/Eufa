@@ -27,6 +27,7 @@ npm run benchmark
 * NPM v5.3.0
 * Gulp v3.9.1
 * Emsdk (emscripten v1.37.13)
+* Binaryen latest version
 
 ### Classes
 

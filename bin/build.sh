@@ -34,7 +34,13 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=2 emcc -s WASM=1 --profiling -O3 -o dist/eufa-module.js src/build.cc $_TSTRING
+    EMCC_DEBUG=1 emcc -s WASM=1 -O3 -o dist/eufa-module.js src/build.cc $_TSTRING
+
+    # Output .wat
+    if [ $(command -v wasm-dis) ]
+    then
+        wasm-dis ./dist/eufa-module.wasm $1> ./dist/eufa-module.wat
+    fi
 else
     echo "[Eufa] Command 'emcc' not found, please install 'emsdk' first."
     exit 1
@@ -54,6 +60,4 @@ else
     exit 1
 fi
 
-
-echo "[Eufa] building binary... done."
 exit 0

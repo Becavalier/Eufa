@@ -41,35 +41,15 @@ extern "C" {
     }
 
     double EMSCRIPTEN_KEEPALIVE f64_abs (double number) {
-        return fabs(number);
+        return abs(number);
     }
 
     unsigned int EMSCRIPTEN_KEEPALIVE i64_sqrt (unsigned int number) {
-        float f;
-        unsigned int u;
-
-        f = number;
-        u = *(unsigned int *)&f;
-        u = (u + 0x3f7a63d7) >> 1;
-        f = *(float *) &u;
-        u = f;
-        u = (u + number/u) >> 1;
-
-        return u;
+        return sqrt(number);
     }
 
     double EMSCRIPTEN_KEEPALIVE f64_sqrt (double number) {
-        long i;
-        float x, y;
-        const float f = 1.5F;
-        x = number * 0.5F;
-        y = number;
-        i = *(long *) &y;
-        i = 0x5f3759df - (i >> 1);
-        y = *(float *) &i;
-        y = y * (f - (x * y * y));
-
-        return number * y;
+        return sqrtf(number);
     }
 
 #ifdef __cplusplus
