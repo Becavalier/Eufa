@@ -10,6 +10,7 @@ var spinner = ora('[Eufa] calculating for benchmark...');
 spinner.start();
 
 chromeLauncher.launch({
+    chromeFlags: ['--headless'],
     port: 9222
 }).then(chrome => {
     CDP(client => {
@@ -1820,10 +1821,10 @@ chromeLauncher.launch({
                                           let f64_sqrt = Module["asm"]["_f64_sqrt"];
         
                                           let i_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
-                                              let startTime = new Date().getTime();
+                                              let startTime = performance.now();
                                               for (let j = 0; j < times; j++) {
-                                                  let _x = Math.abs(Math.round(Math.random() * 1e+7)) + 1;
-                                                  let _y = Math.abs(Math.round(Math.random() * 1e+7)) + 1;
+                                                  let _x = Math.round(Math.random() * 1e+7) + 100;
+                                                  let _y = Math.round(Math.random() * 1e+7) + 100;
                                                   if (operandCount === 1) {
                                                       method(_x);
                                                   }
@@ -1831,14 +1832,14 @@ chromeLauncher.launch({
                                                       method(_x, _y);
                                                   }
                                               }
-                                              return (new Date().getTime() - startTime) / 1000;
+                                              return (performance.now() - startTime).toFixed(3);
                                           }
                                           
                                           let f_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
-                                              let startTime = new Date().getTime();
+                                              let startTime = performance.now();
                                               for (let j = 0; j < times; j++) {
-                                                  let _x = (Math.abs(Math.round(Math.random() * 1e+12)) + 1) / 1e+4;
-                                                  let _y = (Math.abs(Math.round(Math.random() * 1e+12)) + 1) / 1e+4;
+                                                  let _x = Math.random() * 1e+7 + 100;
+                                                  let _y = Math.random() * 1e+7 + 100;
                                                   
                                                   if (operandCount === 1) {
                                                       method(_x);
@@ -1847,7 +1848,7 @@ chromeLauncher.launch({
                                                       method(_x, _y);
                                                   }
                                               }
-                                              return (new Date().getTime() - startTime) / 1000;
+                                              return (performance.now() - startTime).toFixed(3);
                                           }
                                          
                                           var data = [
@@ -1904,8 +1905,8 @@ chromeLauncher.launch({
                         data.forEach(function(item) {
                             table.cell('Methods', item.method);
                             table.cell('Times', item.times);
-                            table.cell('WebAssembly(s)', item.wasmResult);
-                            table.cell('Native(s)', item.nativeResult);
+                            table.cell('WebAssembly(ms)', item.wasmResult);
+                            table.cell('Native(ms)', item.nativeResult);
                             table.cell('Percent(%)', (100 * (item.nativeResult - item.wasmResult) / item.nativeResult).toFixed(5));
                             table.newRow();
                         });

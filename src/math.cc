@@ -54,7 +54,6 @@ extern "C" {
         f = *(float *) &u;
         u = f;
         u = (u + number/u) >> 1;
-        u = (u + number/u) >> 1;
 
         return u;
     }
@@ -69,7 +68,7 @@ extern "C" {
         i = 0x5f3759df - (i >> 1);
         y = *(float *) &i;
         y = y * (f - (x * y * y));
-        y = y * (f - (x * y * y));
+
         return number * y;
     }
 
