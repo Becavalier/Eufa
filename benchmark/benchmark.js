@@ -10,7 +10,7 @@ var spinner = ora('[Eufa] calculating for benchmark...');
 spinner.start();
 
 chromeLauncher.launch({
-    //chromeFlags: ['--headless'],
+    chromeFlags: ['--headless'],
     port: 9222
 }).then(chrome => {
     CDP(client => {
