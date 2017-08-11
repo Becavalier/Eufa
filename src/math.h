@@ -1,6 +1,7 @@
 #ifndef EUFA_MATH
 #define EUFA_MATH
 
+#include "global.h"
 #include<emscripten/emscripten.h>
 #include<cstdlib>
 #include<cmath>

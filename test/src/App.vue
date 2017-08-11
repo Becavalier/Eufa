@@ -17,6 +17,9 @@
       <span>Eufa.Math.f64_abs({{ params.nf_x }}): {{ f64_abs }}</span><br/>
       <span>Eufa.Math.i64_sqrt({{ params.i_x }}): {{ i64_sqrt }}</span><br/>
       <span>Eufa.Math.f64_sqrt({{ params.f_x }}): {{ f64_sqrt }}</span><br/>
+
+      <h3>String</h3>
+      <span>Eufa.String.ptr_capitalize({{ params.string }}): {{ ptr_capitalize }}</span><br/>
     </div>
   </div>
 </template>
@@ -37,7 +40,8 @@ export default {
         ni_x: -10,
         ni_y: -20,
         nf_x: -11.5,
-        nf_y: -22.5
+        nf_y: -22.5,
+        string: 'abcdefg'
       },
       i64_add: '',
       f64_add: '',
@@ -50,7 +54,8 @@ export default {
       i64_abs: '',
       f64_abs: '',
       i64_sqrt: '',
-      f64_sqrt: ''
+      f64_sqrt: '',
+      ptr_capitalize: ''
     }
   },
   created () {
@@ -75,6 +80,8 @@ export default {
       // Math.sqrt
       this.i64_sqrt = eufa.Math.i64_sqrt(this.params.i_x)
       this.f64_sqrt = eufa.Math.f64_sqrt(this.params.f_x)
+      // String.capitalize
+      this.ptr_capitalize = eufa.String.capitalize(this.params.string)
     })
   }
 }

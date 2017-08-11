@@ -2,8 +2,10 @@
 
 # Global
 EUFA_SOURCE_FOLDER='compiler/es5'
-EUFA_BABEL_TRANSFORM_LIST='eufa-post-compile.js eufa-umd-wrapper.js'
+
+EUFA_BABEL_TRANSFORM_LIST='eufa-post-compile.js eufa-umd-wrapper.js eufa-library.js'
 EUFA_POST_COMPILE_EMBED_LIST='eufa-post-compile.js'
+EUFA_LIBRARY='eufa-library.js'
 
 # Gulp flags
 EUFA_UMD_WRAPPER='eufa-umd-wrapper.js'
@@ -34,12 +36,14 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=1 emcc -s WASM=1 -O3 -o dist/eufa-module.js src/build.cc $_TSTRING
+    EMCC_DEBUG=1 emcc -s ASSERTIONS=1 -s WASM=1 -O3 -o dist/eufa-module.js src/build.cc $_TSTRING --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY
 
     # Output .wat
     if [ $(command -v wasm-dis) ]
     then
         wasm-dis ./dist/eufa-module.wasm $1> ./dist/eufa-module.wat
+    else
+        echo "[Eufa] command 'wasm-dis' not found, please check your global PATH and try again."
     fi
 else
     echo "[Eufa] Command 'emcc' not found, please install 'emsdk' first."

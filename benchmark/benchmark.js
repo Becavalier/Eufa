@@ -1822,14 +1822,15 @@ chromeLauncher.launch({
         
                                           let i_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
                                               let startTime = performance.now();
+                                              let sum = 0;
                                               for (let j = 0; j < times; j++) {
                                                   let _x = Math.round(Math.random() * 1e+7) + 100;
                                                   let _y = Math.round(Math.random() * 1e+7) + 100;
                                                   if (operandCount === 1) {
-                                                      method(_x);
+                                                      sum += method(_x);
                                                   }
                                                   if (operandCount === 2) {
-                                                      method(_x, _y);
+                                                      sum += method(_x, _y);
                                                   }
                                               }
                                               return (performance.now() - startTime).toFixed(3);
@@ -1837,15 +1838,16 @@ chromeLauncher.launch({
                                           
                                           let f_testWithOperands = (method, operandCount = 2, times = 1e+7) => {
                                               let startTime = performance.now();
+                                              let sum = 0;
                                               for (let j = 0; j < times; j++) {
                                                   let _x = Math.random() * 1e+7 + 100;
                                                   let _y = Math.random() * 1e+7 + 100;
                                                   
                                                   if (operandCount === 1) {
-                                                      method(_x);
+                                                      sum += method(_x);
                                                   }
                                                   if (operandCount === 2) {
-                                                      method(_x, _y);
+                                                      sum += method(_x, _y);
                                                   }
                                               }
                                               return (performance.now() - startTime).toFixed(3);

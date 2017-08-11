@@ -29,7 +29,7 @@ gulp.task('default', () => {
                 .pipe(gulpReplace('require("path")', 'null'))
                 // To fix for node context end
                 .pipe(gulp.dest('./dist/'))
-                .on('end', resolve)
+                .on('end', resolve);
         });
     }).then(() => {
         return (async () => {
@@ -51,7 +51,7 @@ gulp.task('default', () => {
     }).then(() => {
         // Clear files
         gulp.src([basedir + program.m, basedir + program.w], {read: false})
-            .pipe(gulpClean())
+            .pipe(gulpClean());
     });
 });
 
