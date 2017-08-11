@@ -50,7 +50,7 @@ gulp.task('default', () => {
         })();
     }).then(() => {
         // Clear files
-        gulp.src([basedir + program.m, basedir + program.w], {read: false})
+        gulp.src([basedir + program.w], {read: false})
             .pipe(gulpClean());
     });
 });

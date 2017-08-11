@@ -28,9 +28,9 @@ __ATPOSTRUN__.push(function () {
 
     // String
     Eufa.String.capitalize = function (string) {
-        // Allocate memeory
+        // Get length
         var _size = Module.lengthBytesUTF8(string) + 1;
-        console.log(_size);
+        // Allocate memeory
         var _buf = Module._malloc(_size);
         // Copy date to memeory
         Module.stringToUTF8(string, _buf, _size);
@@ -44,5 +44,5 @@ __ATPOSTRUN__.push(function () {
         return result;
     };
 
-    callback && callback();
+    callback && callback(Eufa);
 });

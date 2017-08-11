@@ -6,7 +6,7 @@ extern "C" {
 
     void EMSCRIPTEN_KEEPALIVE capitalize (char *string) {
         int i = 0;
-        while (true) {
+        while (1) {
             char _current_pos = *(string + i);
 
             if (_current_pos >= 0x61 && _current_pos <= 0x7a) {
