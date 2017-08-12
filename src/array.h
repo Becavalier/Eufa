@@ -2,9 +2,9 @@
 #define EUFA_ARRAY
 
 #include "global.h"
-#include<math.h>
-#include<emscripten/emscripten.h>
-#include<stack>
+#include <math.h>
+#include <emscripten/emscripten.h>
+#include <stack>
 
 using namespace std;
 

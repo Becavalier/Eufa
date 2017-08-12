@@ -19,7 +19,13 @@
       <span>Eufa.Math.f64_sqrt({{ params.f_x }}): {{ f64_sqrt }}</span><br/>
 
       <h3>String</h3>
-      <span>Eufa.String.ptr_capitalize({{ params.string }}): {{ ptr_capitalize }}</span><br/>
+      <span>Eufa.String.ptr_capitalize('{{ params.string_en }}'): {{ ptr_capitalize }}</span><br/>
+
+      <h3>Encryptor</h3>
+      <span>Eufa.Encryptor.base64_encode('{{ params.string_zh }}'): {{ base64_encode_zh }}</span><br/>
+      <span>Eufa.Encryptor.base64_encode('{{ params.string_en }}'): {{ base64_encode_en }}</span><br/>
+      <span>Eufa.Encryptor.base64_decode('{{ params.string_zh_base64_encoded }}'): {{ base64_decode_zh }}</span><br/>
+      <span>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}'): {{ base64_decode_en }}</span><br/>
     </div>
   </div>
 </template>
@@ -41,7 +47,10 @@ export default {
         ni_y: -20,
         nf_x: -11.5,
         nf_y: -22.5,
-        string: 'abcdefg'
+        string_en: 'abcdefg',
+        string_zh: '你好 WebAssembly',
+        string_en_base64_encoded: 'YWJjZGVmZwA=',
+        string_zh_base64_encoded: '5L2g5aW9IFdlYkFzc2VtYmx5AA=='
       },
       i64_add: '',
       f64_add: '',
@@ -55,7 +64,11 @@ export default {
       f64_abs: '',
       i64_sqrt: '',
       f64_sqrt: '',
-      ptr_capitalize: ''
+      ptr_capitalize: '',
+      base64_encode_zh: '',
+      base64_encode_en: '',
+      base64_decode_zh: '',
+      base64_decode_en: ''
     }
   },
   created () {
@@ -81,7 +94,12 @@ export default {
       this.i64_sqrt = eufa.Math.i64_sqrt(this.params.i_x)
       this.f64_sqrt = eufa.Math.f64_sqrt(this.params.f_x)
       // String.capitalize
-      this.ptr_capitalize = eufa.String.capitalize(this.params.string)
+      this.ptr_capitalize = eufa.String.capitalize(this.params.string_en)
+      // Encryptor.base64_encode
+      this.base64_encode_zh = eufa.Encryptor.base64_encode(this.params.string_zh)
+      this.base64_encode_en = eufa.Encryptor.base64_encode(this.params.string_en)
+      this.base64_decode_zh = eufa.Encryptor.base64_decode(this.params.string_zh_base64_encoded)
+      this.base64_decode_en = eufa.Encryptor.base64_decode(this.params.string_en_base64_encoded)
     })
   }
 }

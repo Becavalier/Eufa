@@ -8,7 +8,7 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {};
 
     // Math
     Eufa.Math.i64_add = Module["asm"]["_i64_add"];
@@ -42,6 +42,42 @@ __ATPOSTRUN__.push(() => {
         return result;
     };
 
+    // Encryptor
+    Eufa.Encryptor.base64_encode = string => {
+        // Get length
+        var _size = Module.lengthBytesUTF8(string) + 1;
+        // Allocate memeory
+        var _buf = Module._malloc(_size);
+        // Copy date to memeory
+        Module.stringToUTF8(string, _buf, _size);
+        // Core
+        let _offset_buf = Module["asm"]["_base64_encode"](_buf, _size);
+        // Read back from the same memory
+        let result = Module.UTF8ToString(_offset_buf);
+        // Free up memory
+        Module._free(_buf);
+        // Module._free(_offset_buf);
+
+        return result;
+    }
+
+    Eufa.Encryptor.base64_decode = string => {
+        // Get length
+        var _size = Module.lengthBytesUTF8(string) + 1;
+        // Allocate memeory
+        var _buf = Module._malloc(_size);
+        // Copy date to memeory
+        Module.stringToUTF8(string, _buf, _size);
+        // Core
+        let _offset_buf = Module["asm"]["_base64_decode_ex"](_buf, _size);
+        // Read back from the same memory
+        let result = Module.UTF8ToString(_offset_buf);
+        // Free up memory
+        Module._free(_buf);
+        // Module._free(_offset_buf);
+
+        return result;
+    }
 
     callback && callback(Eufa);
 });

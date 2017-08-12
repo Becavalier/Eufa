@@ -2,9 +2,9 @@
 #define EUFA_MATH
 
 #include "global.h"
-#include<emscripten/emscripten.h>
-#include<cstdlib>
-#include<cmath>
+#include <emscripten/emscripten.h>
+#include <cstdlib>
+#include <cmath>
 
 using namespace std;
 
