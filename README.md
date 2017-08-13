@@ -1,5 +1,5 @@
 # Eufa
-A low-level high-efficient utility functions library written in webassembly.
+A high efficient utility functions library written in webassembly.
 
 # Use
 
