@@ -1,6 +1,7 @@
 #ifndef EUFA_GLOBAL
 #define EUFA_GLOBAL
 
+#include <inttypes.h>
 #include <emscripten/emscripten.h>
 
 extern "C" {

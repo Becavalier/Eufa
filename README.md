@@ -92,3 +92,5 @@ npm run benchmark
 > Eufa.Encryptor.base64_encode<string>
 
 > Eufa.Encryptor.base64_decode<string>
+
+> Eufa.Encryptor.md5<string>

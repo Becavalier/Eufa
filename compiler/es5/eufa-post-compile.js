@@ -81,5 +81,23 @@ __ATPOSTRUN__.push(function () {
         return result;
     };
 
+    Eufa.Encryptor.md5 = function (string) {
+        // Get length
+        var _size = Module.lengthBytesUTF8(string) + 1;
+        // Allocate memeory
+        var _buf = Module._malloc(_size);
+        // Copy date to memeory
+        Module.stringToUTF8(string, _buf, _size);
+        // Core
+        var _offset_buf = Module["asm"]["_md5"](_buf, _size - 1);
+        // Read back from the same memory
+        var result = Module.UTF8ToString(_offset_buf);
+        // Free up memory
+        Module._free(_buf);
+        // Module._free(_offset_buf);
+
+        return result;
+    };
+
     callback && callback(Eufa);
 });

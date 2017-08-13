@@ -5,27 +5,29 @@
     <br/>
     <div>
       <h3>Math</h3>
-      <span>Eufa.Math.i64_add({{ params.i_x }}, {{ params.i_y }}): {{ i64_add }}</span><br/>
-      <span>Eufa.Math.f64_add({{ params.f_x }}, {{ params.f_y }}): {{ f64_add }}</span><br/>
-      <span>Eufa.Math.i64_minus({{ params.i_x }}, {{ params.i_y }}): {{ i64_minus }}</span><br/>
-      <span>Eufa.Math.f64_minus({{ params.f_x }}, {{ params.f_y }}): {{ f64_minus }}</span><br/>
-      <span>Eufa.Math.i64_multiply({{ params.i_x }}, {{ params.i_y }}): {{ i64_multiply }}</span><br/>
-      <span>Eufa.Math.f64_multiply({{ params.f_x }}, {{ params.f_y }}): {{ f64_multiply }}</span><br/>
-      <span>Eufa.Math.i64_divide({{ params.i_x }}, {{ params.i_y }}): {{ i64_divide }}</span><br/>
-      <span>Eufa.Math.f64_divide({{ params.f_x }}, {{ params.f_y }}): {{ f64_divide }}</span><br/>
-      <span>Eufa.Math.i64_abs({{ params.ni_x }}): {{ i64_abs }}</span><br/>
-      <span>Eufa.Math.f64_abs({{ params.nf_x }}): {{ f64_abs }}</span><br/>
-      <span>Eufa.Math.i64_sqrt({{ params.i_x }}): {{ i64_sqrt }}</span><br/>
-      <span>Eufa.Math.f64_sqrt({{ params.f_x }}): {{ f64_sqrt }}</span><br/>
+      <span>Eufa.Math.i64_add({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_add }}</b></span><br/>
+      <span>Eufa.Math.f64_add({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_add }}</b></span><br/>
+      <span>Eufa.Math.i64_minus({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_minus }}</b></span><br/>
+      <span>Eufa.Math.f64_minus({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_minus }}</b></span><br/>
+      <span>Eufa.Math.i64_multiply({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_multiply }}</b></span><br/>
+      <span>Eufa.Math.f64_multiply({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_multiply }}</b></span><br/>
+      <span>Eufa.Math.i64_divide({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_divide }}</b></span><br/>
+      <span>Eufa.Math.f64_divide({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_divide }}</b></span><br/>
+      <span>Eufa.Math.i64_abs({{ params.ni_x }}): <b>{{ i64_abs }}</b></span><br/>
+      <span>Eufa.Math.f64_abs({{ params.nf_x }}): <b>{{ f64_abs }}</b></span><br/>
+      <span>Eufa.Math.i64_sqrt({{ params.i_x }}): <b>{{ i64_sqrt }}</b></span><br/>
+      <span>Eufa.Math.f64_sqrt({{ params.f_x }}): <b>{{ f64_sqrt }}</b></span><br/>
 
       <h3>String</h3>
-      <span>Eufa.String.ptr_capitalize('{{ params.string_en }}'): {{ ptr_capitalize }}</span><br/>
+      <span>Eufa.String.ptr_capitalize('{{ params.string_en }}'): <b>{{ ptr_capitalize }}</b></span><br/>
 
       <h3>Encryptor</h3>
-      <span>Eufa.Encryptor.base64_encode('{{ params.string_zh }}'): {{ base64_encode_zh }}</span><br/>
-      <span>Eufa.Encryptor.base64_encode('{{ params.string_en }}'): {{ base64_encode_en }}</span><br/>
-      <span>Eufa.Encryptor.base64_decode('{{ params.string_zh_base64_encoded }}'): {{ base64_decode_zh }}</span><br/>
-      <span>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}'): {{ base64_decode_en }}</span><br/>
+      <span>Eufa.Encryptor.base64_encode('{{ params.string_zh }}'): <b>{{ base64_encode_zh }}</b></span><br/>
+      <span>Eufa.Encryptor.base64_encode('{{ params.string_en }}'): <b>{{ base64_encode_en }}</b></span><br/>
+      <span>Eufa.Encryptor.base64_decode('{{ params.string_zh_base64_encoded }}'): <b>{{ base64_decode_zh }}</b></span><br/>
+      <span>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}'): <b>{{ base64_decode_en }}</b></span><br/>
+      <span>Eufa.Encryptor.md5('{{ params.string_en }}'): <b>{{ md5_en }}</b></span><br/>
+      <span>Eufa.Encryptor.md5('{{ params.string_zh }}'): <b>{{ md5_zh }}</b></span><br/>
     </div>
   </div>
 </template>
@@ -68,7 +70,9 @@ export default {
       base64_encode_zh: '',
       base64_encode_en: '',
       base64_decode_zh: '',
-      base64_decode_en: ''
+      base64_decode_en: '',
+      md5_en: '',
+      md5_zh: ''
     }
   },
   created () {
@@ -100,6 +104,9 @@ export default {
       this.base64_encode_en = eufa.Encryptor.base64_encode(this.params.string_en)
       this.base64_decode_zh = eufa.Encryptor.base64_decode(this.params.string_zh_base64_encoded)
       this.base64_decode_en = eufa.Encryptor.base64_decode(this.params.string_en_base64_encoded)
+      // Encryptor.md5
+      this.md5_en = eufa.Encryptor.md5(this.params.string_en)
+      this.md5_zh = eufa.Encryptor.md5(this.params.string_zh)
     })
   }
 }
