@@ -1,7 +1,13 @@
 # Eufa
 A high efficient utility functions library written in webassembly.
 
-# Use
+## Feature
+
+* High efficient;
+* Auto cache WebAssembly binary into indexedDB;
+* UMD supported, easy to use;
+
+## Use
 
 ```shell
 # Install efua through npm
@@ -20,7 +26,7 @@ eufa.init('static/eufa-module.wasm', () => {
 });
 ```
 
-# Build
+## Build
 
 ### Pre-requisite
 
