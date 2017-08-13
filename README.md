@@ -1,12 +1,33 @@
 # Eufa
 A low-level high-efficient utility functions library written in webassembly.
 
+# Use
+
+```shell
+# Install efua through npm
+npm install eufa --save
+
+```
+
+> Please move *'eufa-module.wasm'* from `node_modules` to some place where you can fetch it by xhr call.
+
+```javascript
+import eufa from 'eufa';
+
+// Init eufa first
+eufa.init('static/eufa-module.wasm', () => {
+    console.log(eufa.Encryptor.base64_encode('Hello WebAssembly, hello Eufa :)'));
+});
+```
+
+# Build
+
 ### Pre-requisite
 
 Install Emscripten SDK from official installing [website](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html).
 
 
-### Build
+### Commands
 ```shell
 # Install dependencies;
 npm install
