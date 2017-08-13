@@ -11,8 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "vue": "^2.3.3",
-    "wasm-loader": "^1.0.0"
+    "vue": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

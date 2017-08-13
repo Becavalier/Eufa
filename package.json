@@ -1,8 +1,11 @@
 {
   "name": "eufa",
-  "version": "0.0.1",
-  "description": "A low-level efficient utility functions library written in webassembly.",
+  "version": "0.1.0",
+  "description": "A high efficient utility functions library written in webassembly.",
   "main": "dist/eufa-umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "gulp test",
     "build": "sudo bash ./bin/build.sh",
@@ -13,6 +16,7 @@
     "url": "git+https://github.com/Becavalier/Eufa.git"
   },
   "keywords": [
+    "eufa",
     "webassembly",
     "utility",
     "library"
