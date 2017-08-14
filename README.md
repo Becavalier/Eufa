@@ -95,3 +95,11 @@ npm run benchmark
 > Eufa.Encryptor.base64_decode\<string\>
 
 > Eufa.Encryptor.md5\<string\>
+
+> Eufa.Encryptor.sha1\<string\>
+
+## Copyright
+
+The Eufa, MIT License.
+
+The PHP License, version 3.01.
