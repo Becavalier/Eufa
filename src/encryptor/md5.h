@@ -1,13 +1,7 @@
-#ifndef EUFA_ENCRYPTOR
-#define EUFA_ENCRYPTOR
+#ifndef EUFA_ENCRYPTOR_MD5
+#define EUFA_ENCRYPTOR_MD5
 
-#include "global.h"
-#include <stdlib.h>
-#include <strings.h>
-#include <string.h>
-#include <emscripten/emscripten.h>
-
-#define EUFA_ZERO(var, size) bzero((var), (size))
+#include "encryptor.h"
 
 #define F(x, y, z) ((z) ^ ((x) & ((y) ^ (z))))
 #define G(x, y, z) ((y) ^ ((z) & ((x) ^ (y))))
@@ -35,8 +29,9 @@
 
 extern "C" {
 
-    extern unsigned char* base64_encode (const unsigned char *str, size_t length);
-    extern unsigned char* base64_decode_ex (const unsigned char *str, size_t length);
+    /*
+     *  Expose functions.
+     */
     extern char* md5 (const unsigned char *str, size_t length);
 
     typedef struct {
@@ -49,6 +44,7 @@ extern "C" {
     void MD5Init (MD5_CTX *ctx);
     void MD5Update (MD5_CTX *ctx, const unsigned char *data, size_t size);
     void MD5Final (unsigned char *result, MD5_CTX *ctx);
+
     void make_digest_ex (char *md5str, const unsigned char *digest, int len);
 
 }

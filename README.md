@@ -6,6 +6,7 @@ A high efficient utility functions library written in webassembly.
 * High efficient;
 * Auto cache WebAssembly binary into indexedDB;
 * UMD supported, easy to use;
+* Part of functions moved from [php-src](https://github.com/php/php-src);
 
 ## Use
 
@@ -59,38 +60,38 @@ npm run benchmark
 ### Classes
 
 * Math
-> Eufa.Math.i64_add<int, int>
+> Eufa.Math.i64_add<<int, int>>
 
-> Eufa.Math.f64_add<double, double>
+> Eufa.Math.f64_add<<double, double>>
 
-> Eufa.Math.i64_minus<int, int>
+> Eufa.Math.i64_minus<<int, int>>
 
-> Eufa.Math.f64_minus<double, double>
+> Eufa.Math.f64_minus<<double, double>>
 
-> Eufa.Math.i64_multiply<int, int>
+> Eufa.Math.i64_multiply<<int, int>>
 
-> Eufa.Math.f64_multiply<double, double>
+> Eufa.Math.f64_multiply<<double, double>>
 
-> Eufa.Math.i64_divide<int, int>
+> Eufa.Math.i64_divide<<int, int>>
 
-> Eufa.Math.f64_divide<double, double>
+> Eufa.Math.f64_divide<<double, double>>
 
-> Eufa.Math.i64_abs<int>
+> Eufa.Math.i64_abs<<int>>
 
-> Eufa.Math.f64_abs<double>
+> Eufa.Math.f64_abs<<double>>
 
-> Eufa.Math.i64_sqrt<int>
+> Eufa.Math.i64_sqrt<<int>>
 
-> Eufa.Math.f64_sqrt<double>
+> Eufa.Math.f64_sqrt<<double>>
 
 * String
 
-> Eufa.String.capitalize<string>
+> Eufa.String.capitalize<<string>>
 
 * Encryptor
 
-> Eufa.Encryptor.base64_encode<string>
+> Eufa.Encryptor.base64_encode<<string>>
 
-> Eufa.Encryptor.base64_decode<string>
+> Eufa.Encryptor.base64_decode<<string>>
 
-> Eufa.Encryptor.md5<string>
+> Eufa.Encryptor.md5<<string>>
