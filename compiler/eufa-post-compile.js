@@ -8,7 +8,31 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {};
+
+    // Helper
+    Eufa.Helper.call_str_memeory_method = (method, str, preProcess = false) => {
+        // Get length, includes '\0'
+        var _size = Module.lengthBytesUTF8(str) + 1;
+        // Allocate memeory
+        var _buf = Module._malloc(_size);
+        // Copy date to memeory
+        Module.stringToUTF8(str, _buf, _size);
+        // Before process
+        if (preProcess) {
+            [_buf, _size] = preProcess(_buf, _size);
+        }
+        // Core
+        var _offset_buf = method(_buf, _size);
+        // Read back from the same memory
+        let result = Module.UTF8ToString(_offset_buf);
+        // Free up memory
+        Module._free(_buf);
+        // Module._free(_offset_buf);
+
+        return result;
+    }
+
 
     // Math
     Eufa.Math.i64_add = Module["asm"]["_i64_add"];
@@ -25,76 +49,29 @@ __ATPOSTRUN__.push(() => {
     Eufa.Math.f64_sqrt = Module["asm"]["_f64_sqrt"];
 
     // String
-    Eufa.String.capitalize = string => {
-        // Get length
-        var _size = Module.lengthBytesUTF8(string) + 1;
-        // Allocate memeory
-        var _buf = Module._malloc(_size);
-        // Copy date to memeory
-        Module.stringToUTF8(string, _buf, _size);
-        // Core
-        Module["asm"]["_capitalize"](_buf);
-        // Read back from the same memory
-        let result = Module.UTF8ToString(_buf);
-        // Free up memory
-        Module._free(_buf);
-
-        return result;
+    Eufa.String.capitalize = str => {
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_capitalize"], str);
     };
 
     // Encryptor
-    Eufa.Encryptor.base64_encode = string => {
-        // Get length
-        var _size = Module.lengthBytesUTF8(string) + 1;
-        // Allocate memeory
-        var _buf = Module._malloc(_size);
-        // Copy date to memeory
-        Module.stringToUTF8(string, _buf, _size);
-        // Core
-        let _offset_buf = Module["asm"]["_base64_encode"](_buf, _size);
-        // Read back from the same memory
-        let result = Module.UTF8ToString(_offset_buf);
-        // Free up memory
-        Module._free(_buf);
-        // Module._free(_offset_buf);
-
-        return result;
+    Eufa.Encryptor.base64_encode = str => {
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_base64_encode"], str);
     }
 
-    Eufa.Encryptor.base64_decode = string => {
-        // Get length
-        var _size = Module.lengthBytesUTF8(string) + 1;
-        // Allocate memeory
-        var _buf = Module._malloc(_size);
-        // Copy date to memeory
-        Module.stringToUTF8(string, _buf, _size);
-        // Core
-        let _offset_buf = Module["asm"]["_base64_decode_ex"](_buf, _size);
-        // Read back from the same memory
-        let result = Module.UTF8ToString(_offset_buf);
-        // Free up memory
-        Module._free(_buf);
-        // Module._free(_offset_buf);
-
-        return result;
+    Eufa.Encryptor.base64_decode = str => {
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_base64_decode_ex"], str);
     }
 
-    Eufa.Encryptor.md5 = string => {
-        // Get length
-        var _size = Module.lengthBytesUTF8(string) + 1;
-        // Allocate memeory
-        var _buf = Module._malloc(_size);
-        // Copy date to memeory
-        Module.stringToUTF8(string, _buf, _size);
-        // Core
-        let _offset_buf = Module["asm"]["_md5"](_buf, _size - 1);
-        // Read back from the same memory
-        let result = Module.UTF8ToString(_offset_buf);
-        // Free up memory
-        Module._free(_buf);
-        // Module._free(_offset_buf);
+    Eufa.Encryptor.md5 = str => {
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_md5"], str, (_buf, _size) => {
+            return [_buf, _size - 1];
+        });
+    }
 
-        return result;
+    Eufa.Encryptor.sha1 = str => {
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_sha1"], str, (_buf, _size) => {
+            return [_buf, _size - 1];
+        });
     }
 
     callback && callback(Eufa);

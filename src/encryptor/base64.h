@@ -1,5 +1,5 @@
-#ifndef EUFA_ENCRYPTOR_MD5
-#define EUFA_ENCRYPTOR_MD5
+#ifndef EUFA_ENCRYPTOR_BASE64
+#define EUFA_ENCRYPTOR_BASE64
 
 #include "encryptor.h"
 

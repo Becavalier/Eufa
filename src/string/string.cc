@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-    void EMSCRIPTEN_KEEPALIVE capitalize (char *string) {
+    unsigned char* EMSCRIPTEN_KEEPALIVE capitalize (unsigned char *string) {
         int i = 0;
         while (1) {
             char _current_pos = *(string + i);
@@ -19,6 +19,8 @@ extern "C" {
 
             i++;
         }
+
+        return string;
     }
 
 #ifdef __cplusplus

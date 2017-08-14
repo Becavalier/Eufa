@@ -28,6 +28,8 @@
       <span>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}'): <b>{{ base64_decode_en }}</b></span><br/>
       <span>Eufa.Encryptor.md5('{{ params.string_en }}'): <b>{{ md5_en }}</b></span><br/>
       <span>Eufa.Encryptor.md5('{{ params.string_zh }}'): <b>{{ md5_zh }}</b></span><br/>
+      <span>Eufa.Encryptor.sha1('{{ params.string_en }}'): <b>{{ sha1_en }}</b></span><br/>
+      <span>Eufa.Encryptor.sha1('{{ params.string_zh }}'): <b>{{ sha1_zh }}</b></span><br/>
     </div>
   </div>
 </template>
@@ -72,7 +74,9 @@ export default {
       base64_decode_zh: '',
       base64_decode_en: '',
       md5_en: '',
-      md5_zh: ''
+      md5_zh: '',
+      sha1_en: '',
+      sha1_zh: ''
     }
   },
   created () {
@@ -107,6 +111,9 @@ export default {
       // Encryptor.md5
       this.md5_en = eufa.Encryptor.md5(this.params.string_en)
       this.md5_zh = eufa.Encryptor.md5(this.params.string_zh)
+      // Encryptor.sha1
+      this.sha1_en = eufa.Encryptor.sha1(this.params.string_en)
+      this.sha1_zh = eufa.Encryptor.sha1(this.params.string_zh)
     })
   }
 }

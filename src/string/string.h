@@ -4,7 +4,7 @@
 #include "../global.h"
 
 extern "C" {
-    extern void capitalize (char *string);
+    extern unsigned char* capitalize (unsigned char *string);
 }
 
 
