@@ -4,7 +4,7 @@ A high efficient utility functions library written in webassembly.
 ## Feature
 
 * High efficient;
-* Auto cache WebAssembly binary into indexedDB;
+* Automatically caching WebAssembly binary into indexedDB;
 * UMD supported, easy to use;
 * Part of functions moved from [php-src](https://github.com/php/php-src);
 

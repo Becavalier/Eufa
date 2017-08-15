@@ -1,35 +1,116 @@
 <template>
   <div id="app">
     <h1>Eufa</h1>
-    <h4>A low-level high efficient utility functions library written in webassembly.</h4>
+    <h4>A high efficient utility functions library written in webassembly.</h4>
     <br/>
     <div>
       <h3>Math</h3>
-      <span>Eufa.Math.i64_add({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_add }}</b></span><br/>
-      <span>Eufa.Math.f64_add({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_add }}</b></span><br/>
-      <span>Eufa.Math.i64_minus({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_minus }}</b></span><br/>
-      <span>Eufa.Math.f64_minus({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_minus }}</b></span><br/>
-      <span>Eufa.Math.i64_multiply({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_multiply }}</b></span><br/>
-      <span>Eufa.Math.f64_multiply({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_multiply }}</b></span><br/>
-      <span>Eufa.Math.i64_divide({{ params.i_x }}, {{ params.i_y }}): <b>{{ i64_divide }}</b></span><br/>
-      <span>Eufa.Math.f64_divide({{ params.f_x }}, {{ params.f_y }}): <b>{{ f64_divide }}</b></span><br/>
-      <span>Eufa.Math.i64_abs({{ params.ni_x }}): <b>{{ i64_abs }}</b></span><br/>
-      <span>Eufa.Math.f64_abs({{ params.nf_x }}): <b>{{ f64_abs }}</b></span><br/>
-      <span>Eufa.Math.i64_sqrt({{ params.i_x }}): <b>{{ i64_sqrt }}</b></span><br/>
-      <span>Eufa.Math.f64_sqrt({{ params.f_x }}): <b>{{ f64_sqrt }}</b></span><br/>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_add({{ params.i_x }}, {{ params.i_y }})</td>
+          <td>{{ i64_add }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_add({{ params.f_x }}, {{ params.f_y }})</td>
+          <td>{{ f64_add }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_minus({{ params.i_x }}, {{ params.i_y }})</td>
+          <td>{{ i64_minus }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_minus({{ params.f_x }}, {{ params.f_y }})</td>
+          <td>{{ f64_minus }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_multiply({{ params.i_x }}, {{ params.i_y }})</td>
+          <td>{{ i64_multiply }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_multiply({{ params.f_x }}, {{ params.f_y }})</td>
+          <td>{{ f64_multiply }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_divide({{ params.i_x }}, {{ params.i_y }})</td>
+          <td>{{ i64_divide }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_divide({{ params.f_x }}, {{ params.f_y }})</td>
+          <td>{{ f64_divide }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_abs({{ params.ni_x }})</td>
+          <td>{{ i64_abs }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_abs({{ params.nf_x }})</td>
+          <td>{{ f64_abs }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.i64_sqrt({{ params.i_x }})</td>
+          <td>{{ i64_sqrt }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Math.f64_sqrt({{ params.f_x }})</td>
+          <td>{{ f64_sqrt }}</td>
+        </tr>
+      </table>
 
       <h3>String</h3>
-      <span>Eufa.String.ptr_capitalize('{{ params.string_en }}'): <b>{{ ptr_capitalize }}</b></span><br/>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.String.ptr_capitalize('{{ params.string_en }}')</td>
+          <td>{{ ptr_capitalize }}</td>
+        </tr>
+      </table>
 
       <h3>Encryptor</h3>
-      <span>Eufa.Encryptor.base64_encode('{{ params.string_zh }}'): <b>{{ base64_encode_zh }}</b></span><br/>
-      <span>Eufa.Encryptor.base64_encode('{{ params.string_en }}'): <b>{{ base64_encode_en }}</b></span><br/>
-      <span>Eufa.Encryptor.base64_decode('{{ params.string_zh_base64_encoded }}'): <b>{{ base64_decode_zh }}</b></span><br/>
-      <span>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}'): <b>{{ base64_decode_en }}</b></span><br/>
-      <span>Eufa.Encryptor.md5('{{ params.string_en }}'): <b>{{ md5_en }}</b></span><br/>
-      <span>Eufa.Encryptor.md5('{{ params.string_zh }}'): <b>{{ md5_zh }}</b></span><br/>
-      <span>Eufa.Encryptor.sha1('{{ params.string_en }}'): <b>{{ sha1_en }}</b></span><br/>
-      <span>Eufa.Encryptor.sha1('{{ params.string_zh }}'): <b>{{ sha1_zh }}</b></span><br/>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.base64_encode('{{ params.string_zh }}')</td>
+          <td>{{ base64_encode_zh }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.base64_encode('{{ params.string_en }}')</td>
+          <td>{{ base64_encode_en }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.base64_decode('{{ params.string_zh_base64_encoded }}')</td>
+          <td>{{ base64_decode_zh }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.base64_decode('{{ params.string_en_base64_encoded }}')</td>
+          <td>{{ base64_decode_en }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.md5('{{ params.string_en }}')</td>
+          <td>{{ md5_en }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.md5('{{ params.string_zh }}')</td>
+          <td>{{ md5_zh }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.sha1('{{ params.string_en }}')</td>
+          <td>{{ sha1_en }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Encryptor.sha1('{{ params.string_zh }}')</td>
+          <td>{{ sha1_zh }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -41,7 +122,6 @@ export default {
   name: 'app',
   data () {
     return {
-      eufa: null,
       params: {
         i_x: 10,
         i_y: 20,
@@ -51,11 +131,12 @@ export default {
         ni_y: -20,
         nf_x: -11.5,
         nf_y: -22.5,
-        string_en: 'abcdefg',
-        string_zh: '你好 WebAssembly',
-        string_en_base64_encoded: 'YWJjZGVmZwA=',
-        string_zh_base64_encoded: '5L2g5aW9IFdlYkFzc2VtYmx5AA=='
+        string_en: 'Hello, WebAssembly :)',
+        string_zh: '你好，WebAssembly ：）',
+        string_en_base64_encoded: 'SGVsbG8sIFdlYkFzc2VtYmx5IDopAA==',
+        string_zh_base64_encoded: '5L2g5aW977yMV2ViQXNzZW1ibHkg77ya77yJAA=='
       },
+      eufa: null,
       i64_add: '',
       f64_add: '',
       i64_minus: '',
@@ -128,5 +209,16 @@ export default {
   text-align: left;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+table {
+  width: 1200px;
+  border-collapse: collapse;
+  border: none;
+}
+table td, table th {
+  border: solid #000 1px;
+  padding: 5px;
+  text-align: left;
 }
 </style>

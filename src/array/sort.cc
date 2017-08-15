@@ -1,4 +1,4 @@
-#include "array.h"
+#include "sort.h"
 
 #ifdef __cplusplus
 extern "C" {
