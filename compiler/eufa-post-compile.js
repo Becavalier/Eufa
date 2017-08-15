@@ -8,7 +8,7 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {};
 
     // Helper
     Eufa.Helper.call_str_memeory_method = (method, str, preProcess = false) => {
@@ -28,7 +28,35 @@ __ATPOSTRUN__.push(() => {
         let result = Module.UTF8ToString(_offset_buf);
         // Free up memory
         Module._free(_buf);
-        // Module._free(_offset_buf);
+
+        return result;
+    }
+
+    Eufa.Helper.call_array_memeory_method = (method, array, reverse = false) => {
+        var _sizeof_double = Module["asm"]["_sizeof_type_double"]()
+        var _size = array.length * _sizeof_double;
+        // Allocate memeory
+        var _buf = Module._malloc(_size);
+        // Copy date to memeory
+        for (var i = 0; i < array.length; i++) {
+            Module.setValue(_buf + _sizeof_double * i, array[i], 'double');
+        }
+        // Core
+        var _offset_buf = method(_buf, array.length);
+        // Read back from the same memorys
+        var result = [];
+        if (!reverse) {
+            for (var i = 0; i < array.length; i++) {
+                result.push(Module.getValue(_offset_buf + _sizeof_double * i, 'double'));
+            }
+        } else {
+            for (var i = array.length - 1; i >= 0; i--) {
+                result.push(Module.getValue(_offset_buf + _sizeof_double * i, 'double'));
+            }
+        }
+
+        // Free up memory
+        Module._free(_buf);
 
         return result;
     }
@@ -72,6 +100,14 @@ __ATPOSTRUN__.push(() => {
         return Eufa.Helper.call_str_memeory_method(Module["asm"]["_sha1"], str, (_buf, _size) => {
             return [_buf, _size - 1];
         });
+    }
+
+    Eufa.Array.num_sort = array => {
+        return Eufa.Helper.call_array_memeory_method(Module["asm"]["_num_sort"], array);
+    }
+
+    Eufa.Array.num_rsort = array => {
+        return Eufa.Helper.call_array_memeory_method(Module["asm"]["_num_sort"], array, true);
     }
 
     callback && callback(Eufa);

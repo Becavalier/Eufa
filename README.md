@@ -88,6 +88,12 @@ npm run benchmark
 
 > Eufa.String.capitalize\<string\>
 
+* Array
+
+> Eufa.Array.num_sort\<array\>
+
+> Eufa.Array.num_rsort\<array\>
+
 * Encryptor
 
 > Eufa.Encryptor.base64_encode\<string\>

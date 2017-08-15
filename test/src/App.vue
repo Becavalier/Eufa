@@ -67,8 +67,24 @@
           <th>Result</th>
         </tr>
         <tr>
-          <td>Eufa.String.ptr_capitalize('{{ params.string_en }}')</td>
+          <td>Eufa.String.capitalize('{{ params.string_en }}')</td>
           <td>{{ ptr_capitalize }}</td>
+        </tr>
+      </table>
+
+      <h3>Arrau</h3>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Array.num_sort({{ params.array_num }})</td>
+          <td>{{ num_sort }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Array.num_rsort({{ params.array_num }})</td>
+          <td>{{ num_rsort }}</td>
         </tr>
       </table>
 
@@ -134,7 +150,8 @@ export default {
         string_en: 'Hello, WebAssembly :)',
         string_zh: '你好，WebAssembly ：）',
         string_en_base64_encoded: 'SGVsbG8sIFdlYkFzc2VtYmx5IDopAA==',
-        string_zh_base64_encoded: '5L2g5aW977yMV2ViQXNzZW1ibHkg77ya77yJAA=='
+        string_zh_base64_encoded: '5L2g5aW977yMV2ViQXNzZW1ibHkg77ya77yJAA==',
+        array_num: [5, 3, 6, 0.2, 5, 9]
       },
       eufa: null,
       i64_add: '',
@@ -157,7 +174,9 @@ export default {
       md5_en: '',
       md5_zh: '',
       sha1_en: '',
-      sha1_zh: ''
+      sha1_zh: '',
+      num_sort: '',
+      num_rsort: ''
     }
   },
   created () {
@@ -195,6 +214,10 @@ export default {
       // Encryptor.sha1
       this.sha1_en = eufa.Encryptor.sha1(this.params.string_en)
       this.sha1_zh = eufa.Encryptor.sha1(this.params.string_zh)
+      // Array.num_sort
+      this.num_sort = eufa.Array.num_sort(this.params.array_num)
+      // Array.num_rsort
+      this.num_rsort = eufa.Array.num_rsort(this.params.array_num)
     })
   }
 }
