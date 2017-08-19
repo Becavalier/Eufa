@@ -72,7 +72,19 @@
         </tr>
       </table>
 
-      <h3>Arrau</h3>
+      <h3>Tensorflow</h3>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Tensorflow.tf_version()</td>
+          <td>{{ tf_version }}</td>
+        </tr>
+      </table>
+
+      <h3>Array</h3>
       <table>
         <tr>
           <th width="680">Method</th>
@@ -176,7 +188,8 @@ export default {
       sha1_en: '',
       sha1_zh: '',
       num_sort: '',
-      num_rsort: ''
+      num_rsort: '',
+      tf_version: ''
     }
   },
   created () {
@@ -218,6 +231,8 @@ export default {
       this.num_sort = eufa.Array.num_sort(this.params.array_num)
       // Array.num_rsort
       this.num_rsort = eufa.Array.num_rsort(this.params.array_num)
+      // Tensorflow.tf_version
+      this.tf_version = eufa.Tensorflow.tf_version()
     })
   }
 }

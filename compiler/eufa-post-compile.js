@@ -8,7 +8,7 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {};
 
     // Helper
     Eufa.Helper.call_str_memeory_method = (method, str, preProcess = false) => {
@@ -75,6 +75,14 @@ __ATPOSTRUN__.push(() => {
     Eufa.Math.f64_abs = Module["asm"]["_f64_abs"];
     Eufa.Math.i64_sqrt = Module["asm"]["_i64_sqrt"];
     Eufa.Math.f64_sqrt = Module["asm"]["_f64_sqrt"];
+
+    // Tensorflow
+    Eufa.Tensorflow.tf_version = () => {
+        var _buf = Module["asm"]["_tf_version"]();
+        var result =  Module.UTF8ToString(_buf);
+        Module._free(_buf);
+        return result;
+    };
 
     // String
     Eufa.String.capitalize = str => {

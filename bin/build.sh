@@ -36,7 +36,14 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=1 emcc -s ASSERTIONS=1 -s WASM=1 -O3 -o dist/eufa-module.js src/build.cc $_TSTRING --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY
+    EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
+                      -s ASSERTIONS=1 \
+                      -s WASM=1 \
+                      -O3 \
+                      -I/usr/local/include -L/usr/local/lib \
+                      -o dist/eufa-module.js \
+                      --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY \
+                      -ltensorflow \
 
     # Output .wat
     if [ $(command -v wasm-dis) ]

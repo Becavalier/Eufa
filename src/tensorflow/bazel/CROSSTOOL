@@ -1,0 +1,86 @@
+major_version: "clang-llvm"
+minor_version: ""
+
+
+default_target_cpu: "darwin"
+default_toolchain {
+  cpu: "darwin"
+  toolchain_identifier: "clang-llvm"
+}
+
+
+toolchain {
+  toolchain_identifier: "clang-llvm"
+  abi_version: "local"
+  abi_libc_version: "local"
+  builtin_sysroot: ""
+  compiler: "clang"
+  host_system_name: "local"
+  needsPic: true
+  supports_gold_linker: true
+  supports_incremental_linker: false
+  supports_fission: false
+  supports_interface_shared_objects: false
+  supports_normalizing_ar: false
+  supports_start_end_lib: true
+  target_libc: "local"
+  target_cpu: "darwin"
+  target_system_name: "local"
+  cxx_flag: "-std=c++11"
+  linker_flag: "-lstdc++"
+  linker_flag: "-lm"
+  linker_flag: "-fuse-ld=gold"
+  linker_flag: "-B/home/hbucher/install/bin"
+  linker_flag: "-B/usr/bin"
+  linker_flag: "-Wl,--build-id=md5"
+  linker_flag: "-Wl,--hash-style=gnu"
+  cxx_builtin_include_directory: "/usr/include/c++/5.4.0"
+  cxx_builtin_include_directory: "/home/hbucher/install/include/c++/v1"
+  cxx_builtin_include_directory: "/home/hbucher/install/include/"
+  cxx_builtin_include_directory: "/usr/include/x86_64-linux-gnu/c++/5.4.0"
+  cxx_builtin_include_directory: "/usr/include/c++/5.4.0/backward"
+  cxx_builtin_include_directory: "/usr/local/include"
+  cxx_builtin_include_directory: "/home/hbucher/install/lib/clang/4.0.0/include"
+  cxx_builtin_include_directory: "/usr/include/x86_64-linux-gnu"
+  cxx_builtin_include_directory: "/usr/include"
+  objcopy_embed_flag: "-I"
+  objcopy_embed_flag: "binary"
+  unfiltered_cxx_flag: "-Wno-builtin-macro-redefined"
+  unfiltered_cxx_flag: "-D__DATE__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIMESTAMP__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
+  compiler_flag: "-U_FORTIFY_SOURCE"
+  compiler_flag: "-fstack-protector"
+  compiler_flag: "-Wall"
+  compiler_flag: "-B/home/hbucher/install/bin"
+  compiler_flag: "-B/usr/bin"
+  compiler_flag: "-fcolor-diagnostics"
+  compiler_flag: "-fno-omit-frame-pointer"
+  compiler_flag: "-v"
+  tool_path {name: "ld" path: "/usr/bin/ld" }
+  tool_path {name: "cpp" path: "/usr/bin/cpp" }
+  tool_path {name: "dwp" path: "/usr/bin/dwp" }
+  tool_path {name: "gcov" path: "/usr/bin/gcov" }
+  tool_path {name: "nm" path: "/usr/bin/nm" }
+  tool_path {name: "objcopy" path: "/usr/bin/objcopy" }
+  tool_path {name: "objdump" path: "/usr/bin/objdump" }
+  tool_path {name: "strip" path: "/usr/bin/strip" }
+  tool_path {name: "gcc" path: "/home/hbucher/install/bin/clang" }
+  tool_path {name: "ar" path: "/usr/bin/ar" }
+
+  compilation_mode_flags {
+    mode: DBG
+    compiler_flag: "-g"
+  }
+  compilation_mode_flags {
+    mode: OPT
+    compiler_flag: "-g0"
+    compiler_flag: "-O2"
+    compiler_flag: "-D_FORTIFY_SOURCE=1"
+    compiler_flag: "-DNDEBUG"
+    compiler_flag: "-ffunction-sections"
+    compiler_flag: "-fdata-sections"
+    linker_flag: "-Wl,--gc-sections"
+  }
+  linking_mode_flags { mode: DYNAMIC }
+}
