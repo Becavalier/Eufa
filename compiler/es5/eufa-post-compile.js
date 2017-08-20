@@ -12,33 +12,43 @@ __ATPOSTRUN__.push(function () {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {};
 
     // Helper
-    Eufa.Helper.call_str_memeory_method = function (method, str) {
-        var preProcess = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
+    Eufa.Helper.malloc_str = function (str) {
         // Get length, includes '\0'
         var _size = Module.lengthBytesUTF8(str) + 1;
         // Allocate memeory
-        var _buf = Module._malloc(_size);
+        var _buff = Module._malloc(_size);
         // Copy date to memeory
-        Module.stringToUTF8(str, _buf, _size);
+        Module.stringToUTF8(str, _buff, _size);
+        return [_buff, _size];
+    };
+
+    Eufa.Helper.call_str_memeory_method = function (method, str) {
+        var preProcess = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+        var _Eufa$Helper$malloc_s = Eufa.Helper.malloc_str(str),
+            _Eufa$Helper$malloc_s2 = _slicedToArray(_Eufa$Helper$malloc_s, 2),
+            _buff = _Eufa$Helper$malloc_s2[0],
+            _size = _Eufa$Helper$malloc_s2[1];
         // Before process
+
+
         if (preProcess) {
-            var _preProcess = preProcess(_buf, _size);
+            var _preProcess = preProcess(_buff, _size);
 
             var _preProcess2 = _slicedToArray(_preProcess, 2);
 
-            _buf = _preProcess2[0];
+            _buff = _preProcess2[0];
             _size = _preProcess2[1];
         }
         // Core
-        var _offset_buf = method(_buf, _size);
+        var _offset_buff = method(_buff, _size);
         // Read back from the same memory
-        var result = Module.UTF8ToString(_offset_buf);
+        var result = Module.UTF8ToString(_offset_buff);
         // Free up memory
-        Module._free(_buf);
+        Module._free(_buff);
 
         return result;
     };
@@ -49,27 +59,27 @@ __ATPOSTRUN__.push(function () {
         var _sizeof_double = Module["asm"]["_sizeof_type_double"]();
         var _size = array.length * _sizeof_double;
         // Allocate memeory
-        var _buf = Module._malloc(_size);
+        var _buff = Module._malloc(_size);
         // Copy date to memeory
         for (var i = 0; i < array.length; i++) {
-            Module.setValue(_buf + _sizeof_double * i, array[i], 'double');
+            Module.setValue(_buff + _sizeof_double * i, array[i], 'double');
         }
         // Core
-        var _offset_buf = method(_buf, array.length);
+        var _offset_buff = method(_buff, array.length);
         // Read back from the same memorys
         var result = [];
         if (!reverse) {
             for (var i = 0; i < array.length; i++) {
-                result.push(Module.getValue(_offset_buf + _sizeof_double * i, 'double'));
+                result.push(Module.getValue(_offset_buff + _sizeof_double * i, 'double'));
             }
         } else {
             for (var i = array.length - 1; i >= 0; i--) {
-                result.push(Module.getValue(_offset_buf + _sizeof_double * i, 'double'));
+                result.push(Module.getValue(_offset_buff + _sizeof_double * i, 'double'));
             }
         }
 
         // Free up memory
-        Module._free(_buf);
+        Module._free(_buff);
 
         return result;
     };
@@ -90,9 +100,9 @@ __ATPOSTRUN__.push(function () {
 
     // Tensorflow
     Eufa.Tensorflow.tf_version = function () {
-        var _buf = Module["asm"]["_tf_version"]();
-        var result = Module.UTF8ToString(_buf);
-        Module._free(_buf);
+        var _buff = Module["asm"]["_tf_version"]();
+        var result = Module.UTF8ToString(_buff);
+        Module._free(_buff);
         return result;
     };
 
@@ -111,14 +121,14 @@ __ATPOSTRUN__.push(function () {
     };
 
     Eufa.Encryptor.md5 = function (str) {
-        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_md5"], str, function (_buf, _size) {
-            return [_buf, _size - 1];
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_md5"], str, function (_buff, _size) {
+            return [_buff, _size - 1];
         });
     };
 
     Eufa.Encryptor.sha1 = function (str) {
-        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_sha1"], str, function (_buf, _size) {
-            return [_buf, _size - 1];
+        return Eufa.Helper.call_str_memeory_method(Module["asm"]["_sha1"], str, function (_buff, _size) {
+            return [_buff, _size - 1];
         });
     };
 
@@ -129,6 +139,69 @@ __ATPOSTRUN__.push(function () {
     Eufa.Array.num_rsort = function (array) {
         return Eufa.Helper.call_array_memeory_method(Module["asm"]["_num_sort"], array, true);
     };
+
+    // Cache
+    var EUFA_CACHE_TYPE_NUM = 1;
+    var EUFA_CACHE_TYPE_STR = 2;
+    Eufa.Cache.set = function (key, value) {
+        var _Eufa$Helper$malloc_s3 = Eufa.Helper.malloc_str(key.toString()),
+            _Eufa$Helper$malloc_s4 = _slicedToArray(_Eufa$Helper$malloc_s3, 2),
+            _kbuff = _Eufa$Helper$malloc_s4[0],
+            _ksize = _Eufa$Helper$malloc_s4[1];
+
+        if (Object.prototype.toString.call(value) === '[object Number]') {
+            Module["asm"]["_set_kv_num"](_kbuff, value);
+        }
+        if (Object.prototype.toString.call(value) === '[object String]') {
+            var _Eufa$Helper$malloc_s5 = Eufa.Helper.malloc_str(value),
+                _Eufa$Helper$malloc_s6 = _slicedToArray(_Eufa$Helper$malloc_s5, 2),
+                _vbuff = _Eufa$Helper$malloc_s6[0],
+                _vsize = _Eufa$Helper$malloc_s6[1];
+
+            Module["asm"]["_set_kv_str"](_kbuff, _vbuff);
+        }
+        if (Object.prototype.toString.call(value) === '[object Array]' || Object.prototype.toString.call(value) === '[object Object]') {
+            var _Eufa$Helper$malloc_s7 = Eufa.Helper.malloc_str(JSON.stringify(value)),
+                _Eufa$Helper$malloc_s8 = _slicedToArray(_Eufa$Helper$malloc_s7, 2),
+                _vbuff = _Eufa$Helper$malloc_s8[0],
+                _vsize = _Eufa$Helper$malloc_s8[1];
+
+            Module["asm"]["_set_kv_str"](_kbuff, _vbuff);
+        }
+    };
+
+    Eufa.Cache.get = function (key) {
+        var _Eufa$Helper$malloc_s9 = Eufa.Helper.malloc_str(key),
+            _Eufa$Helper$malloc_s10 = _slicedToArray(_Eufa$Helper$malloc_s9, 2),
+            _kbuff = _Eufa$Helper$malloc_s10[0],
+            _ksize = _Eufa$Helper$malloc_s10[1];
+
+        var type = Module["asm"]["_searchTypeNode"](_kbuff);
+        if (type === EUFA_CACHE_TYPE_NUM) {
+            return Module["asm"]["_get_kv_num"](_kbuff);
+        }
+
+        if (type === EUFA_CACHE_TYPE_STR) {
+            var _rbuff = Module["asm"]["_get_kv_str"](_kbuff);
+            var _rstr = Module.UTF8ToString(_rbuff);
+            try {
+                return JSON.parse(_rstr);
+            } catch (e) {
+                return _rstr;
+            }
+        }
+    };
+
+    Eufa.Cache.del = function (key) {
+        var _Eufa$Helper$malloc_s11 = Eufa.Helper.malloc_str(key),
+            _Eufa$Helper$malloc_s12 = _slicedToArray(_Eufa$Helper$malloc_s11, 2),
+            _kbuff = _Eufa$Helper$malloc_s12[0],
+            _ksize = _Eufa$Helper$malloc_s12[1];
+
+        Module["asm"]["_del_kv"](_kbuff);
+    };
+
+    Eufa.Cache.clear = Module["asm"]["_clear_kv"];
 
     callback && callback(Eufa);
 });

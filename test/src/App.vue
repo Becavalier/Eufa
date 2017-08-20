@@ -100,6 +100,30 @@
         </tr>
       </table>
 
+      <h3>Cache</h3>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Cache.get('{{ params.cache_num_key }}')</td>
+          <td>{{ get_num }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Cache.get('{{ params.cache_str_key }}')</td>
+          <td>{{ get_str }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Cache.get('{{ params.cache_obj_key }}')</td>
+          <td>{{ get_obj }}</td>
+        </tr>
+        <tr>
+          <td>Eufa.Cache.get('{{ params.cache_arr_key }}')</td>
+          <td>{{ get_arr }}</td>
+        </tr>
+      </table>
+
       <h3>Encryptor</h3>
       <table>
         <tr>
@@ -163,7 +187,17 @@ export default {
         string_zh: '你好，WebAssembly ：）',
         string_en_base64_encoded: 'SGVsbG8sIFdlYkFzc2VtYmx5IDopAA==',
         string_zh_base64_encoded: '5L2g5aW977yMV2ViQXNzZW1ibHkg77ya77yJAA==',
-        array_num: [5, 3, 6, 0.2, 5, 9]
+        array_num: [5, 3, 6, 0.2, 5, 9],
+        cache_num_key: 'EUFA_CACHE_NUM_KEY',
+        cache_num_val: 115655.49806892683,
+        cache_str_key: 'EUFA_CACHE_STR_KEY',
+        cache_str_val: 'EUFA_CACHE_STR_VAL',
+        cache_obj_key: 'EUFA_CACHE_OBJ_KEY',
+        cache_obj_val: {
+          'EUFA_CACHE_OBJ_KEY': 'EUFA_CACHE_OBJ_VAL'
+        },
+        cache_arr_key: 'EUFA_CACHE_ARR_KEY',
+        cache_arr_val: ['EUFA_CACHE_ARR_KEY', 'EUFA_CACHE_ARR_VAL']
       },
       eufa: null,
       i64_add: '',
@@ -189,7 +223,11 @@ export default {
       sha1_zh: '',
       num_sort: '',
       num_rsort: '',
-      tf_version: ''
+      tf_version: '',
+      get_num: '',
+      get_str: '',
+      get_obj: '',
+      get_arr: ''
     }
   },
   created () {
@@ -232,7 +270,17 @@ export default {
       // Array.num_rsort
       this.num_rsort = eufa.Array.num_rsort(this.params.array_num)
       // Tensorflow.tf_version
-      this.tf_version = eufa.Tensorflow.tf_version()
+      // this.tf_version = eufa.Tensorflow.tf_version()
+      // Cache.set
+      eufa.Cache.set(this.params.cache_num_key, this.params.cache_num_val)
+      eufa.Cache.set(this.params.cache_str_key, this.params.cache_str_val)
+      eufa.Cache.set(this.params.cache_obj_key, this.params.cache_obj_val)
+      eufa.Cache.set(this.params.cache_arr_key, this.params.cache_arr_val)
+      // Cache.get
+      this.get_num = eufa.Cache.get(this.params.cache_num_key)
+      this.get_str = eufa.Cache.get(this.params.cache_str_key)
+      this.get_obj = eufa.Cache.get(this.params.cache_obj_key)
+      this.get_arr = eufa.Cache.get(this.params.cache_arr_key)
     })
   }
 }
