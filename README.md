@@ -104,6 +104,16 @@ npm run benchmark
 
 > Eufa.Encryptor.sha1\<string\>
 
+* Cache
+
+> Eufa.Cache.set\<string, string/number/object/array\>
+
+> Eufa.Cache.get\<string\>
+
+> Eufa.Cache.del\<string\>
+
+> Eufa.Cache.clear\<\>
+
 ## Copyright
 
 The Eufa, MIT License.
