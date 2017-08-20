@@ -116,7 +116,7 @@ extern "C" {
             }
             thisNode = thisNode->prev;
         } while(thisNode != NULL);
-        return 0;
+        return FALSE;
     }
 
     void delTypeNodeInLinkedList (const char* key) {
@@ -138,15 +138,16 @@ extern "C" {
     }
 
     // Export functions
-    extern void set_kv_str (const char* key, const char* value);
-    extern void set_kv_num (const char* key, double value);
+    extern void cache_set_type (const char* key, const unsigned char type);
+    extern void cache_set_kv_str (const char* key, const char* value);
+    extern void cache_set_kv_num (const char* key, double value);
 
-    extern const char* get_kv_str (const char* key);
-    extern double get_kv_num (const char* key);
+    extern const char* cache_get_kv_str (const char* key);
+    extern double cache_get_kv_num (const char* key);
 
-    extern void del_kv (const char* key);
+    extern void cache_del_kv (const char* key);
 
-    extern void clear_kv (void);
+    extern void cache_clear (void);
 }
 
 

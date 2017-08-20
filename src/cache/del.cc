@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-    void EMSCRIPTEN_KEEPALIVE del_kv (const char* key) {
+    void EMSCRIPTEN_KEEPALIVE cache_del_kv (const char* key) {
         delDataNodeInLinkedList(key);
         delTypeNodeInLinkedList(key);
     }

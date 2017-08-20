@@ -4,14 +4,22 @@
 extern "C" {
 #endif
 
-    const char* EMSCRIPTEN_KEEPALIVE get_kv_str (const char* key) {
+    const char* EMSCRIPTEN_KEEPALIVE cache_get_kv_str (const char* key) {
         cacheDataNode* dataNode = searchDataNodeInLinkedList(key);
-        return dataNode->data->strData;
+        if (dataNode != NULL) {
+            return dataNode->data->strData;
+        } else {
+            return NULL;
+        }
     }
 
-    double EMSCRIPTEN_KEEPALIVE get_kv_num (const char* key) {
+    double EMSCRIPTEN_KEEPALIVE cache_get_kv_num (const char* key) {
         cacheDataNode* dataNode = searchDataNodeInLinkedList(key);
-        return dataNode->data->numData;
+        if (dataNode != NULL) {
+            return dataNode->data->numData;
+        } else {
+            return FALSE;
+        }
     }
 
 #ifdef __cplusplus

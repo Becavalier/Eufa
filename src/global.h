@@ -4,6 +4,9 @@
 #include <inttypes.h>
 #include <emscripten/emscripten.h>
 
+#define TRUE 1
+#define FALSE 0
+
 extern "C" {
 
     extern void print_i32 (int number);

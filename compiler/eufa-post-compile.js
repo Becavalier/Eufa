@@ -126,45 +126,62 @@ __ATPOSTRUN__.push(() => {
     // Cache
     const EUFA_CACHE_TYPE_NUM = 1;
     const EUFA_CACHE_TYPE_STR = 2;
+    const EUFA_CACHE_TYPE_OBJ = 3;
+    const EUFA_CACHE_TYPE_ARR = 4;
+    const EUFA_CACHE_TYPE_NONE = 0;
     Eufa.Cache.set = (key, value) => {
         var [_kbuff, _ksize] = Eufa.Helper.malloc_str(key.toString());
         if (Object.prototype.toString.call(value) === '[object Number]') {
-            Module["asm"]["_set_kv_num"](_kbuff, value);
+            Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_NUM);
+            Module["asm"]["_cache_set_kv_num"](_kbuff, value);
         }
         if (Object.prototype.toString.call(value) === '[object String]') {
             var [_vbuff, _vsize] = Eufa.Helper.malloc_str(value);
-            Module["asm"]["_set_kv_str"](_kbuff, _vbuff);
+            Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_STR);
+            Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
-        if (Object.prototype.toString.call(value) === '[object Array]' || Object.prototype.toString.call(value) === '[object Object]') {
+        if (Object.prototype.toString.call(value) === '[object Array]') {
             var [_vbuff, _vsize] = Eufa.Helper.malloc_str(JSON.stringify(value));
-            Module["asm"]["_set_kv_str"](_kbuff, _vbuff);
+            Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_ARR);
+            Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
+        }
+        if (Object.prototype.toString.call(value) === '[object Object]') {
+            var [_vbuff, _vsize] = Eufa.Helper.malloc_str(JSON.stringify(value));
+            Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_OBJ);
+            Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
     }
 
     Eufa.Cache.get = key => {
         var [_kbuff, _ksize] = Eufa.Helper.malloc_str(key);
         var type = Module["asm"]["_searchTypeNode"](_kbuff);
+
+        if (type === EUFA_CACHE_TYPE_NONE) {
+            return null;
+        }
+
         if (type === EUFA_CACHE_TYPE_NUM) {
-            return Module["asm"]["_get_kv_num"](_kbuff);
+            return Module["asm"]["_cache_get_kv_num"](_kbuff);
         }
 
         if (type === EUFA_CACHE_TYPE_STR) {
-            var _rbuff = Module["asm"]["_get_kv_str"](_kbuff);
+            var _rbuff = Module["asm"]["_cache_get_kv_str"](_kbuff);
+            return Module.UTF8ToString(_rbuff);
+        }
+
+        if (type === EUFA_CACHE_TYPE_OBJ || type === EUFA_CACHE_TYPE_ARR) {
+            var _rbuff = Module["asm"]["_cache_get_kv_str"](_kbuff);
             let _rstr = Module.UTF8ToString(_rbuff);
-            try {
-                return JSON.parse(_rstr);
-            } catch(e) {
-                return _rstr;
-            }
+            return JSON.parse(_rstr);
         }
     }
 
     Eufa.Cache.del = key => {
         var [_kbuff, _ksize] = Eufa.Helper.malloc_str(key);
-        Module["asm"]["_del_kv"](_kbuff);
+        Module["asm"]["_cache_del_kv"](_kbuff);
     }
 
-    Eufa.Cache.clear = Module["asm"]["_clear_kv"];
+    Eufa.Cache.clear = Module["asm"]["_cache_clear"];
 
     callback && callback(Eufa);
 });

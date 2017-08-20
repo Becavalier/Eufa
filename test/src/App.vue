@@ -122,6 +122,10 @@
           <td>Eufa.Cache.get('{{ params.cache_arr_key }}')</td>
           <td>{{ get_arr }}</td>
         </tr>
+        <tr>
+          <td>Eufa.Cache.get('{{ params.cache_none_key }}')</td>
+          <td>(type) {{ get_none }}</td>
+        </tr>
       </table>
 
       <h3>Encryptor</h3>
@@ -197,7 +201,8 @@ export default {
           'EUFA_CACHE_OBJ_KEY': 'EUFA_CACHE_OBJ_VAL'
         },
         cache_arr_key: 'EUFA_CACHE_ARR_KEY',
-        cache_arr_val: ['EUFA_CACHE_ARR_KEY', 'EUFA_CACHE_ARR_VAL']
+        cache_arr_val: ['EUFA_CACHE_ARR_KEY', 'EUFA_CACHE_ARR_VAL'],
+        cache_none_key: 'EUFA_CACHE_NONE_KEY'
       },
       eufa: null,
       i64_add: '',
@@ -227,12 +232,14 @@ export default {
       get_num: '',
       get_str: '',
       get_obj: '',
-      get_arr: ''
+      get_arr: '',
+      get_none: ''
     }
   },
   created () {
     eufa.init('static/eufa-module.wasm', () => {
       console.log(eufa)
+      window.Eufa = eufa
       // Call directly
       // Math.add
       this.i64_add = eufa.Math.i64_add(this.params.i_x, this.params.i_y)
@@ -281,6 +288,7 @@ export default {
       this.get_str = eufa.Cache.get(this.params.cache_str_key)
       this.get_obj = eufa.Cache.get(this.params.cache_obj_key)
       this.get_arr = eufa.Cache.get(this.params.cache_arr_key)
+      this.get_none = Object.prototype.toString.call(eufa.Cache.get(this.params.cache_none_key))
     })
   }
 }
