@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-    cosnt char* EMSCRIPTEN_KEEPALIVE freeze_proto_snapshot (void) {
+    const char* EMSCRIPTEN_KEEPALIVE freeze_proto_snapshot (void) {
 
     }
 
