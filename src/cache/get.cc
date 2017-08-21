@@ -13,7 +13,7 @@ extern "C" {
         }
     }
 
-    double EMSCRIPTEN_KEEPALIVE cache_get_kv_num (const char* key) {
+    const double EMSCRIPTEN_KEEPALIVE cache_get_kv_num (const char* key) {
         cacheDataNode* dataNode = searchDataNodeInLinkedList(key);
         if (dataNode != NULL) {
             return dataNode->data->numData;

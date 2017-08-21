@@ -143,7 +143,7 @@ extern "C" {
     extern void cache_set_kv_num (const char* key, double value);
 
     extern const char* cache_get_kv_str (const char* key);
-    extern double cache_get_kv_num (const char* key);
+    extern const double cache_get_kv_num (const char* key);
 
     extern void cache_del_kv (const char* key);
 
