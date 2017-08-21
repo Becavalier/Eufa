@@ -99,7 +99,10 @@ var fetchWebAssemblyModuleBytes = function fetchWebAssemblyModuleBytes(url) {
 Eufa.init = function (wasmSrc, callback) {
     fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(function (bytes) {
         var Module = {};
-        Module.wasmBinary = bytes;
+        // Initilization wasm bytes
+        Module["wasmBinary"] = bytes;
+        // Initilization memory size (64MB)
+        Module["TOTAL_MEMORY"] = 67108864;
         // [ REPLACEMENT_PLACEHOLDER ]
     });
 };

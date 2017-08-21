@@ -90,7 +90,10 @@ let fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION) => {
 Eufa.init = (wasmSrc, callback) => {
     fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(bytes => {
         let Module = {};
-        Module.wasmBinary = bytes;
+        // Initilization wasm bytes
+        Module["wasmBinary"] = bytes;
+        // Initilization memory size (64MB)
+        Module["TOTAL_MEMORY"] = 67108864;
         // [ REPLACEMENT_PLACEHOLDER ]
     });
 };

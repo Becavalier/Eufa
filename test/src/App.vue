@@ -239,7 +239,6 @@ export default {
   created () {
     eufa.init('static/eufa-module.wasm', () => {
       console.log(eufa)
-      window.Eufa = eufa
       // Call directly
       // Math.add
       this.i64_add = eufa.Math.i64_add(this.params.i_x, this.params.i_y)

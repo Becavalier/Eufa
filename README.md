@@ -3,10 +3,11 @@ A high efficient utility functions library written in webassembly.
 
 ## Feature
 
-* High efficient;
+* High efficiency;
 * Automatically caching WebAssembly binary into indexedDB;
-* UMD supported, easy to use;
+* UMD supported, easy to use in frontend;
 * Part of functions moved from [php-src](https://github.com/php/php-src);
+* The maximum availabe memory space is up to 64MB;
 
 ## Use
 

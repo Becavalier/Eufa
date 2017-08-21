@@ -3,7 +3,6 @@
 
 #include "../global.h"
 #include "string.h"
-#include "stdlib.h"
 
 #define EUFA_CACHE_HEAD_LIST_KEY "EUFA_CACHE_HEAD"
 #define EUFA_CACHE_HEAD_LIST_VAL "EUFA_CACHE_HEAD_DATA"
@@ -41,12 +40,12 @@ extern "C" {
     const char* headNodeKey = EUFA_CACHE_HEAD_LIST_KEY;
     const char* headNodeVal = EUFA_CACHE_HEAD_LIST_VAL;
 
-    cacheDataObject *headDataObject = (cacheDataObject*) malloc(sizeof(cacheDataObject));
+    cacheDataObject *headDataObject = (cacheDataObject*) cache_malloc(sizeof(cacheDataObject));
 
-    cacheDataNode *headNode = (cacheDataNode*) malloc(sizeof(cacheDataNode));
+    cacheDataNode *headNode = (cacheDataNode*) cache_malloc(sizeof(cacheDataNode));
     cacheDataNode *tailNode = headNode;
 
-    cacheTypeNode *headTypeNode = (cacheTypeNode*) malloc(sizeof(cacheTypeNode));
+    cacheTypeNode *headTypeNode = (cacheTypeNode*) cache_malloc(sizeof(cacheTypeNode));
     cacheTypeNode *tailTypeNode = headTypeNode;
 
     // Init function
@@ -93,7 +92,8 @@ extern "C" {
                     thisNode->next->prev = thisNode->prev;
                 }
 
-                free(thisNode);
+                cache_free(thisNode->data);
+                cache_free(thisNode);
             }
             thisNode = thisNode->prev;
         } while(thisNode != NULL);
@@ -131,7 +131,7 @@ extern "C" {
                     thisNode->next->prev = thisNode->prev;
                 }
 
-                free(thisNode);
+                cache_free(thisNode);
             }
             thisNode = thisNode->prev;
         } while(thisNode != NULL);

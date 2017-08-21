@@ -39,6 +39,7 @@ then
     EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
                       -s ASSERTIONS=1 \
                       -s WASM=1 \
+                      -s TOTAL_MEMORY=64MB \
                       -O3 \
                       -I/usr/local/include -L/usr/local/lib \
                       -o dist/eufa-module.js \

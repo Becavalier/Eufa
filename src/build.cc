@@ -1,3 +1,4 @@
+#include "global.cc"
 #include "math/math.cc"
 #include "string/string.cc"
 #include "encryptor/md5.cc"

@@ -16,6 +16,22 @@ __ATPOSTRUN__.push(() => {
         var _size = Module.lengthBytesUTF8(str) + 1;
         // Allocate memeory
         var _buff = Module._malloc(_size);
+        if (!_buff) {
+            throw('[Eufa] Unavailable to allocate memory!');
+        }
+        // Copy date to memeory
+        Module.stringToUTF8(str, _buff, _size);
+        return [_buff, _size];
+    }
+
+    Eufa.Helper.cache_malloc_str = str => {
+        // Get length, includes '\0'
+        var _size = Module.lengthBytesUTF8(str) + 1;
+        // Allocate memeory
+        var _buff = Module["asm"]["_cache_malloc"](_size);
+        if (!_buff) {
+            throw('[Eufa] Unavailable to allocate memory!');
+        }
         // Copy date to memeory
         Module.stringToUTF8(str, _buff, _size);
         return [_buff, _size];
@@ -130,23 +146,23 @@ __ATPOSTRUN__.push(() => {
     const EUFA_CACHE_TYPE_ARR = 4;
     const EUFA_CACHE_TYPE_NONE = 0;
     Eufa.Cache.set = (key, value) => {
-        var [_kbuff, _ksize] = Eufa.Helper.malloc_str(key.toString());
+        var [_kbuff, _ksize] = Eufa.Helper.cache_malloc_str(key.toString());
         if (Object.prototype.toString.call(value) === '[object Number]') {
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_NUM);
             Module["asm"]["_cache_set_kv_num"](_kbuff, value);
         }
         if (Object.prototype.toString.call(value) === '[object String]') {
-            var [_vbuff, _vsize] = Eufa.Helper.malloc_str(value);
+            var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(value);
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_STR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Array]') {
-            var [_vbuff, _vsize] = Eufa.Helper.malloc_str(JSON.stringify(value));
+            var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(JSON.stringify(value));
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_ARR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Object]') {
-            var [_vbuff, _vsize] = Eufa.Helper.malloc_str(JSON.stringify(value));
+            var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(JSON.stringify(value));
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_OBJ);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }

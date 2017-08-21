@@ -2,8 +2,6 @@
 #define EUFA_MATH
 
 #include "../global.h"
-#include <cstdlib>
-#include <cmath>
 
 
 extern "C" {

@@ -5,8 +5,8 @@ extern "C" {
 #endif
 
     void EMSCRIPTEN_KEEPALIVE cache_set_kv_str (const char* key, const char* value) {
-        cacheDataObject *data = (cacheDataObject*) malloc(sizeof(cacheDataObject));
-        cacheDataNode *dataNode = (cacheDataNode*) malloc(sizeof(cacheDataNode));
+        cacheDataObject *data = (cacheDataObject*) cache_malloc(sizeof(cacheDataObject));
+        cacheDataNode *dataNode = (cacheDataNode*) cache_malloc(sizeof(cacheDataNode));
         // Fill
         data->strData  = value;
         dataNode->key  = key;
@@ -18,8 +18,8 @@ extern "C" {
     }
 
     void EMSCRIPTEN_KEEPALIVE cache_set_kv_num (const char* key, double value) {
-        cacheDataObject *data = (cacheDataObject*) malloc(sizeof(cacheDataObject));
-        cacheDataNode *dataNode = (cacheDataNode*) malloc(sizeof(cacheDataNode));
+        cacheDataObject *data = (cacheDataObject*) cache_malloc(sizeof(cacheDataObject));
+        cacheDataNode *dataNode = (cacheDataNode*) cache_malloc(sizeof(cacheDataNode));
         // Fill
         data->numData  = value;
         dataNode->key  = key;
@@ -31,7 +31,7 @@ extern "C" {
     }
 
     void EMSCRIPTEN_KEEPALIVE cache_set_type (const char* key, const unsigned char type) {
-        cacheTypeNode *typeNode = (cacheTypeNode*) malloc(sizeof(cacheTypeNode));
+        cacheTypeNode *typeNode = (cacheTypeNode*) cache_malloc(sizeof(cacheTypeNode));
         // Fill
         typeNode->symbol = key;
         typeNode->type   = type;

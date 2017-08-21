@@ -20,6 +20,22 @@ __ATPOSTRUN__.push(function () {
         var _size = Module.lengthBytesUTF8(str) + 1;
         // Allocate memeory
         var _buff = Module._malloc(_size);
+        if (!_buff) {
+            throw '[Eufa] Unavailable to allocate memory!';
+        }
+        // Copy date to memeory
+        Module.stringToUTF8(str, _buff, _size);
+        return [_buff, _size];
+    };
+
+    Eufa.Helper.cache_malloc_str = function (str) {
+        // Get length, includes '\0'
+        var _size = Module.lengthBytesUTF8(str) + 1;
+        // Allocate memeory
+        var _buff = Module["asm"]["_cache_malloc"](_size);
+        if (!_buff) {
+            throw '[Eufa] Unavailable to allocate memory!';
+        }
         // Copy date to memeory
         Module.stringToUTF8(str, _buff, _size);
         return [_buff, _size];
@@ -147,38 +163,38 @@ __ATPOSTRUN__.push(function () {
     var EUFA_CACHE_TYPE_ARR = 4;
     var EUFA_CACHE_TYPE_NONE = 0;
     Eufa.Cache.set = function (key, value) {
-        var _Eufa$Helper$malloc_s3 = Eufa.Helper.malloc_str(key.toString()),
-            _Eufa$Helper$malloc_s4 = _slicedToArray(_Eufa$Helper$malloc_s3, 2),
-            _kbuff = _Eufa$Helper$malloc_s4[0],
-            _ksize = _Eufa$Helper$malloc_s4[1];
+        var _Eufa$Helper$cache_ma = Eufa.Helper.cache_malloc_str(key.toString()),
+            _Eufa$Helper$cache_ma2 = _slicedToArray(_Eufa$Helper$cache_ma, 2),
+            _kbuff = _Eufa$Helper$cache_ma2[0],
+            _ksize = _Eufa$Helper$cache_ma2[1];
 
         if (Object.prototype.toString.call(value) === '[object Number]') {
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_NUM);
             Module["asm"]["_cache_set_kv_num"](_kbuff, value);
         }
         if (Object.prototype.toString.call(value) === '[object String]') {
-            var _Eufa$Helper$malloc_s5 = Eufa.Helper.malloc_str(value),
-                _Eufa$Helper$malloc_s6 = _slicedToArray(_Eufa$Helper$malloc_s5, 2),
-                _vbuff = _Eufa$Helper$malloc_s6[0],
-                _vsize = _Eufa$Helper$malloc_s6[1];
+            var _Eufa$Helper$cache_ma3 = Eufa.Helper.cache_malloc_str(value),
+                _Eufa$Helper$cache_ma4 = _slicedToArray(_Eufa$Helper$cache_ma3, 2),
+                _vbuff = _Eufa$Helper$cache_ma4[0],
+                _vsize = _Eufa$Helper$cache_ma4[1];
 
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_STR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Array]') {
-            var _Eufa$Helper$malloc_s7 = Eufa.Helper.malloc_str(JSON.stringify(value)),
-                _Eufa$Helper$malloc_s8 = _slicedToArray(_Eufa$Helper$malloc_s7, 2),
-                _vbuff = _Eufa$Helper$malloc_s8[0],
-                _vsize = _Eufa$Helper$malloc_s8[1];
+            var _Eufa$Helper$cache_ma5 = Eufa.Helper.cache_malloc_str(JSON.stringify(value)),
+                _Eufa$Helper$cache_ma6 = _slicedToArray(_Eufa$Helper$cache_ma5, 2),
+                _vbuff = _Eufa$Helper$cache_ma6[0],
+                _vsize = _Eufa$Helper$cache_ma6[1];
 
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_ARR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Object]') {
-            var _Eufa$Helper$malloc_s9 = Eufa.Helper.malloc_str(JSON.stringify(value)),
-                _Eufa$Helper$malloc_s10 = _slicedToArray(_Eufa$Helper$malloc_s9, 2),
-                _vbuff = _Eufa$Helper$malloc_s10[0],
-                _vsize = _Eufa$Helper$malloc_s10[1];
+            var _Eufa$Helper$cache_ma7 = Eufa.Helper.cache_malloc_str(JSON.stringify(value)),
+                _Eufa$Helper$cache_ma8 = _slicedToArray(_Eufa$Helper$cache_ma7, 2),
+                _vbuff = _Eufa$Helper$cache_ma8[0],
+                _vsize = _Eufa$Helper$cache_ma8[1];
 
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_OBJ);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
@@ -186,10 +202,10 @@ __ATPOSTRUN__.push(function () {
     };
 
     Eufa.Cache.get = function (key) {
-        var _Eufa$Helper$malloc_s11 = Eufa.Helper.malloc_str(key),
-            _Eufa$Helper$malloc_s12 = _slicedToArray(_Eufa$Helper$malloc_s11, 2),
-            _kbuff = _Eufa$Helper$malloc_s12[0],
-            _ksize = _Eufa$Helper$malloc_s12[1];
+        var _Eufa$Helper$malloc_s3 = Eufa.Helper.malloc_str(key),
+            _Eufa$Helper$malloc_s4 = _slicedToArray(_Eufa$Helper$malloc_s3, 2),
+            _kbuff = _Eufa$Helper$malloc_s4[0],
+            _ksize = _Eufa$Helper$malloc_s4[1];
 
         var type = Module["asm"]["_searchTypeNode"](_kbuff);
 
@@ -214,10 +230,10 @@ __ATPOSTRUN__.push(function () {
     };
 
     Eufa.Cache.del = function (key) {
-        var _Eufa$Helper$malloc_s13 = Eufa.Helper.malloc_str(key),
-            _Eufa$Helper$malloc_s14 = _slicedToArray(_Eufa$Helper$malloc_s13, 2),
-            _kbuff = _Eufa$Helper$malloc_s14[0],
-            _ksize = _Eufa$Helper$malloc_s14[1];
+        var _Eufa$Helper$malloc_s5 = Eufa.Helper.malloc_str(key),
+            _Eufa$Helper$malloc_s6 = _slicedToArray(_Eufa$Helper$malloc_s5, 2),
+            _kbuff = _Eufa$Helper$malloc_s6[0],
+            _ksize = _Eufa$Helper$malloc_s6[1];
 
         Module["asm"]["_cache_del_kv"](_kbuff);
     };
