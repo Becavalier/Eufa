@@ -227,15 +227,17 @@ __ATPOSTRUN__.push(function () {
             var _rstr = Module.UTF8ToString(_rbuff);
             return JSON.parse(_rstr);
         }
+        Module["asm"]["_cache_free"](_kbuff);
     };
 
     Eufa.Cache.del = function (key) {
-        var _Eufa$Helper$malloc_s5 = Eufa.Helper.malloc_str(key),
-            _Eufa$Helper$malloc_s6 = _slicedToArray(_Eufa$Helper$malloc_s5, 2),
-            _kbuff = _Eufa$Helper$malloc_s6[0],
-            _ksize = _Eufa$Helper$malloc_s6[1];
+        var _Eufa$Helper$cache_ma9 = Eufa.Helper.cache_malloc_str(key),
+            _Eufa$Helper$cache_ma10 = _slicedToArray(_Eufa$Helper$cache_ma9, 2),
+            _kbuff = _Eufa$Helper$cache_ma10[0],
+            _ksize = _Eufa$Helper$cache_ma10[1];
 
         Module["asm"]["_cache_del_kv"](_kbuff);
+        Module["asm"]["_cache_free"](_kbuff);
     };
 
     Eufa.Cache.clear = Module["asm"]["_cache_clear"];

@@ -13,13 +13,17 @@
 #define FALSE 0
 #define EUFA_CACHE_MAX_MEMORY_SIZE 16777216
 #define PREFIX_SIZE sizeof(size_t)
-#define increment_cache_used_memory(_n) { \
-    all_cache_used_memory += _n; \
-}
+#define update_zmalloc_stat_alloc(__n) do { \
+    size_t _n = (__n); \
+    if (_n&(sizeof(long)-1)) _n += sizeof(long)-(_n&(sizeof(long)-1)); \
+    all_cache_used_memory += (__n); \
+} while(0)
 
-#define decrement_cache_used_memory(_n) { \
-    all_cache_used_memory -= _n; \
-}
+#define update_zmalloc_stat_free(__n) do { \
+    size_t _n = (__n); \
+    if (_n&(sizeof(long)-1)) _n += sizeof(long)-(_n&(sizeof(long)-1)); \
+    all_cache_used_memory -= (__n); \
+} while(0)
 
 static size_t all_cache_used_memory = 0;
 
@@ -32,6 +36,7 @@ extern "C" {
     /* Environment detect functions */
     extern size_t sizeof_type_double();
     extern size_t sizeof_type_long();
+    extern size_t sizeof_type_size_t();
 
     /* Memory related functions for cache */
     extern size_t cache_used_memory (void);

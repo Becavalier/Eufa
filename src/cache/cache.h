@@ -84,16 +84,22 @@ extern "C" {
         cacheDataNode *thisNode = tailNode;
         do {
             if (strcmp(key, thisNode->key) == 0) {
-                if (thisNode->prev != NULL) {
+                if (thisNode->prev != NULL && thisNode->next != NULL) {
                     thisNode->prev->next = thisNode->next;
+                    thisNode->next->prev = thisNode->prev;
+                } else if (thisNode->prev != NULL) {
+                    thisNode->prev->next = NULL;
+                } else if (thisNode->next != NULL) {
+                    thisNode->next->prev = NULL;
                 }
 
-                if (thisNode->next != NULL) {
-                    thisNode->next->prev = thisNode->prev;
+                if (thisNode == tailNode) {
+                    tailNode = thisNode->prev;
                 }
 
                 cache_free(thisNode->data);
                 cache_free(thisNode);
+                return;
             }
             thisNode = thisNode->prev;
         } while(thisNode != NULL);
@@ -123,15 +129,21 @@ extern "C" {
         cacheTypeNode *thisNode = tailTypeNode;
         do {
             if (strcmp(key, thisNode->symbol) == 0) {
-                if (thisNode->prev != NULL) {
+                if (thisNode->prev != NULL && thisNode->next != NULL) {
                     thisNode->prev->next = thisNode->next;
+                    thisNode->next->prev = thisNode->prev;
+                } else if (thisNode->prev != NULL) {
+                    thisNode->prev->next = NULL;
+                } else if (thisNode->next != NULL) {
+                    thisNode->next->prev = NULL;
                 }
 
-                if (thisNode->next != NULL) {
-                    thisNode->next->prev = thisNode->prev;
+                if (thisNode == tailTypeNode) {
+                    tailTypeNode = thisNode->prev;
                 }
 
                 cache_free(thisNode);
+                return;
             }
             thisNode = thisNode->prev;
         } while(thisNode != NULL);

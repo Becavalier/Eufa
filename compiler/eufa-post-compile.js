@@ -190,11 +190,13 @@ __ATPOSTRUN__.push(() => {
             let _rstr = Module.UTF8ToString(_rbuff);
             return JSON.parse(_rstr);
         }
+        Module["asm"]["_cache_free"](_kbuff);
     }
 
     Eufa.Cache.del = key => {
-        var [_kbuff, _ksize] = Eufa.Helper.malloc_str(key);
+        var [_kbuff, _ksize] = Eufa.Helper.cache_malloc_str(key);
         Module["asm"]["_cache_del_kv"](_kbuff);
+        Module["asm"]["_cache_free"](_kbuff);
     }
 
     Eufa.Cache.clear = Module["asm"]["_cache_clear"];
