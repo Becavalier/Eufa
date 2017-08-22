@@ -1,15 +1,16 @@
 # Eufa
-A high efficient utility functions library written in webassembly.
+A high efficient utility functions library written in webassembly with profiling tools.
 
-## Feature
+## Features
 
 * High efficiency;
 * Automatically caching WebAssembly binary into indexedDB;
 * UMD supported, easy to use in frontend;
 * Part of functions moved from [php-src](https://github.com/php/php-src);
 * The maximum availabe memory space is up to 64MB;
+* Profiling tools embedded.
 
-## Use
+## Using
 
 ```shell
 # Install efua through npm
@@ -114,6 +115,23 @@ npm run benchmark
 > Eufa.Cache.del\<string\>
 
 > Eufa.Cache.clear\<\>
+
+## Tools
+Eufa try embedding some useful wasm profiling tools which written in Python, feel free to use them according to the following documentation.
+
+### Installation
+```shell
+# Install package;
+python3 tools/setup.py install
+```
+
+
+### Using
+```shell
+# Analyze the sections of a wasm module;
+eufa-ds --module <path-to-module>
+```
+
 
 ## Copyright
 
