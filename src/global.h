@@ -12,7 +12,7 @@
 #define TRUE 1
 #define FALSE 0
 #define EUFA_CACHE_MAX_MEMORY_SIZE 16777216
-#define PREFIX_SIZE sizeof(long long)
+#define PREFIX_SIZE sizeof(size_t)
 #define increment_cache_used_memory(_n) { \
     all_cache_used_memory += _n; \
 }
