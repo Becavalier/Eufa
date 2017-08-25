@@ -114,7 +114,7 @@ npm run benchmark
 
 > Eufa.Cache.del\<string\>
 
-> Eufa.Cache.cleamr\<\>
+> Eufa.Cache.clear\<\>
 
 ## Tools (Pending)
 Eufa try embedding some useful wasm profiling tools which wrote in Python, feel free to use them according to the following documentation.
