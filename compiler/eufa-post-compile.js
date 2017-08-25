@@ -8,7 +8,7 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {}, Eufa.MLPack = {};
 
     // Helper
     Eufa.Helper.malloc_str = str => {
@@ -200,6 +200,11 @@ __ATPOSTRUN__.push(() => {
     }
 
     Eufa.Cache.clear = Module["asm"]["_cache_clear"];
+
+    // MLPack
+    Eufa.MLPack.version = () => {
+        return Module.UTF8ToString(Module["asm"]["_mlpack_version"]());
+    }
 
     callback && callback(Eufa);
 });

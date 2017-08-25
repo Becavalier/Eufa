@@ -72,15 +72,15 @@
         </tr>
       </table>
 
-      <h3>Tensorflow</h3>
+      <h3>MLPack</h3>
       <table>
         <tr>
           <th width="680">Method</th>
           <th>Result</th>
         </tr>
         <tr>
-          <td>Eufa.Tensorflow.tf_version()</td>
-          <td>{{ tf_version }}</td>
+          <td>Eufa.MLPack.version()</td>
+          <td>{{ mlpack_version }}</td>
         </tr>
       </table>
 
@@ -228,7 +228,7 @@ export default {
       sha1_zh: '',
       num_sort: '',
       num_rsort: '',
-      tf_version: '',
+      mlpack_version: '',
       get_num: '',
       get_str: '',
       get_obj: '',
@@ -276,8 +276,9 @@ export default {
       this.num_sort = eufa.Array.num_sort(this.params.array_num)
       // Array.num_rsort
       this.num_rsort = eufa.Array.num_rsort(this.params.array_num)
-      // Tensorflow.tf_version
-      // this.tf_version = eufa.Tensorflow.tf_version()
+      // Mlpack.version
+      this.mlpack_version = eufa.MLPack.version()
+      console.log(eufa.MLPack.version())
       // Cache.set
       eufa.Cache.set(this.params.cache_num_key, this.params.cache_num_val)
       eufa.Cache.set(this.params.cache_str_key, this.params.cache_str_val)

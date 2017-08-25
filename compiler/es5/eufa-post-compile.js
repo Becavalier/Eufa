@@ -12,7 +12,7 @@ __ATPOSTRUN__.push(function () {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {}, Eufa.MLPack = {};
 
     // Helper
     Eufa.Helper.malloc_str = function (str) {
@@ -241,6 +241,11 @@ __ATPOSTRUN__.push(function () {
     };
 
     Eufa.Cache.clear = Module["asm"]["_cache_clear"];
+
+    // MLPack
+    Eufa.MLPack.version = function () {
+        return Module.UTF8ToString(Module["asm"]["_mlpack_version"]());
+    };
 
     callback && callback(Eufa);
 });
