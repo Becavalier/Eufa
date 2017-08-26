@@ -51,7 +51,7 @@ then
     # Output .wat
     if [ $(command -v wasm-dis) ]
     then
-        wasm-dis ./dist/eufa-module.wasm $1> ./dist/eufa-module.wat
+        wasm-dis ./dist/eufa-module.wasm $1> ./dist/eufa-module.wast
     else
         echo "[Eufa] command 'wasm-dis' not found, please check your global PATH and try again."
     fi
