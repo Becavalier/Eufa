@@ -1,7 +1,7 @@
 {
   "name": "eufa",
   "version": "0.2.0",
-  "description": "A high efficient utility functions library written in webassembly with profiling tools.",
+  "description": "A high efficient utility functions(encryption, machine learning, etc) library written in webassembly.",
   "main": "dist/eufa-umd.min.js",
   "files": [
     "dist"
