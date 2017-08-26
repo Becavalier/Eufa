@@ -3,10 +3,10 @@
 
 #include "encryptor.h"
 
-#define F(x, y, z) ((z) ^ ((x) & ((y) ^ (z))))
-#define G(x, y, z) ((y) ^ ((z) & ((x) ^ (y))))
-#define H(x, y, z) ((x) ^ (y) ^ (z))
-#define I(x, y, z) ((y) ^ ((x) | ~(z)))
+#define ENCRYPTOR_F(x, y, z) ((z) ^ ((x) & ((y) ^ (z))))
+#define ENCRYPTOR_G(x, y, z) ((y) ^ ((z) & ((x) ^ (y))))
+#define ENCRYPTOR_H(x, y, z) ((x) ^ (y) ^ (z))
+#define ENCRYPTOR_I(x, y, z) ((y) ^ ((x) | ~(z)))
 
 #define SET(n) \
     (ctx->block[(n)] = \

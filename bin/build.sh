@@ -41,6 +41,8 @@ then
                       -s WASM=1 \
                       -s TOTAL_MEMORY=64MB \
                       -O3 \
+                      -std=c++11 \
+                      -stdlib=libc++ \
                       -I/usr/local/include -L/usr/local/lib \
                       -o dist/eufa-module.js \
                       --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY \

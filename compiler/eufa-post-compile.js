@@ -8,7 +8,7 @@ __ATPOSTRUN__.push(() => {
     }
 
     // Wrapper
-    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {}, Eufa.MLPack = {};
+    Eufa.Math = {}, Eufa.String = {}, Eufa.Encryptor = {}, Eufa.Helper = {}, Eufa.Array = {}, Eufa.Tensorflow = {}, Eufa.Cache = {}, Eufa.DLib = {};
 
     // Helper
     Eufa.Helper.malloc_str = str => {
@@ -181,14 +181,11 @@ __ATPOSTRUN__.push(() => {
         }
 
         if (type === EUFA_CACHE_TYPE_STR) {
-            var _rbuff = Module["asm"]["_cache_get_kv_str"](_kbuff);
-            return Module.UTF8ToString(_rbuff);
+            return Module.UTF8ToString(Module["asm"]["_cache_get_kv_str"](_kbuff));
         }
 
         if (type === EUFA_CACHE_TYPE_OBJ || type === EUFA_CACHE_TYPE_ARR) {
-            var _rbuff = Module["asm"]["_cache_get_kv_str"](_kbuff);
-            let _rstr = Module.UTF8ToString(_rbuff);
-            return JSON.parse(_rstr);
+            return JSON.parse(Module.UTF8ToString(Module["asm"]["_cache_get_kv_str"](_kbuff)));
         }
         Module["asm"]["_cache_free"](_kbuff);
     }
@@ -201,9 +198,9 @@ __ATPOSTRUN__.push(() => {
 
     Eufa.Cache.clear = Module["asm"]["_cache_clear"];
 
-    // MLPack
-    Eufa.MLPack.version = () => {
-        return Module.UTF8ToString(Module["asm"]["_mlpack_version"]());
+    // DLib
+    Eufa.DLib.testcase_kmeans = () => {
+        return Module.UTF8ToString(Module["asm"]["_testcase_kmeans"]());
     }
 
     callback && callback(Eufa);

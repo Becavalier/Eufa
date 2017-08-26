@@ -10,7 +10,7 @@
 #include "cache/get.cc"
 #include "cache/del.cc"
 #include "cache/clear.cc"
-#include "mlpack/mlpack.cc"
+#include "dlib/kmeans.cc"
 
 int main() {
     _INIT_EUFA_CACHE_RUNTIME();

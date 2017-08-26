@@ -72,18 +72,6 @@
         </tr>
       </table>
 
-      <h3>MLPack</h3>
-      <table>
-        <tr>
-          <th width="680">Method</th>
-          <th>Result</th>
-        </tr>
-        <tr>
-          <td>Eufa.MLPack.version()</td>
-          <td>{{ mlpack_version }}</td>
-        </tr>
-      </table>
-
       <h3>Array</h3>
       <table>
         <tr>
@@ -167,12 +155,27 @@
           <td>{{ sha1_zh }}</td>
         </tr>
       </table>
+
+      <h3>DLib</h3>
+      <table>
+        <tr>
+          <th width="680">Method</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>Eufa.Dlib.testcase_kmeans()</td>
+          <td><div class="chart" ref="eufa_dlib_testcase_kmeans"></div></td>
+        </tr>
+      </table>
+
+
     </div>
   </div>
 </template>
 
 <script>
 import eufa from 'eufa'
+import echarts from 'echarts'
 
 export default {
   name: 'app',
@@ -276,9 +279,6 @@ export default {
       this.num_sort = eufa.Array.num_sort(this.params.array_num)
       // Array.num_rsort
       this.num_rsort = eufa.Array.num_rsort(this.params.array_num)
-      // Mlpack.version
-      this.mlpack_version = eufa.MLPack.version()
-      console.log(eufa.MLPack.version())
       // Cache.set
       eufa.Cache.set(this.params.cache_num_key, this.params.cache_num_val)
       eufa.Cache.set(this.params.cache_str_key, this.params.cache_str_val)
@@ -290,6 +290,98 @@ export default {
       this.get_obj = eufa.Cache.get(this.params.cache_obj_key)
       this.get_arr = eufa.Cache.get(this.params.cache_arr_key)
       this.get_none = Object.prototype.toString.call(eufa.Cache.get(this.params.cache_none_key))
+      // Dlib.testcase_kmeans
+      let kmeansPayload = JSON.parse(eufa.DLib.testcase_kmeans())
+      let kmeansSeriesData = {
+        'd0': [],
+        'd1': [],
+        'd2': [],
+        'd3': [],
+        'd4': []
+      }
+      kmeansPayload.forEach(row => {
+        kmeansSeriesData[`d${row[0]}`].push([row[1], row[2]])
+      })
+      echarts.init(this.$refs.eufa_dlib_testcase_kmeans).setOption({
+        title: {
+          text: 'K-Means'
+        },
+        grid: {
+          left: '3%',
+          right: '7%',
+          bottom: '3%',
+          containLabel: true
+        },
+        tooltip: {
+          showDelay: 0,
+          formatter: function (params) {
+            return params.seriesName + ' :<br/>(' + params.value[0] + ', ' + params.value[1] + ')'
+          },
+          axisPointer: {
+            show: true,
+            type: 'cross',
+            lineStyle: {
+              type: 'dashed',
+              width: 1
+            }
+          }
+        },
+        legend: {
+          data: ['C1', 'C2', 'C3', 'C4', 'C5'],
+          left: 'center'
+        },
+        xAxis: [
+          {
+            type: 'value',
+            scale: true,
+            axisLabel: {
+              formatter: '{value}'
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            scale: true,
+            axisLabel: {
+              formatter: '{value}'
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        series: [
+          {
+            name: 'C1',
+            type: 'scatter',
+            data: kmeansSeriesData.d0
+          },
+          {
+            name: 'C2',
+            type: 'scatter',
+            data: kmeansSeriesData.d1
+          },
+          {
+            name: 'C3',
+            type: 'scatter',
+            data: kmeansSeriesData.d2
+          },
+          {
+            name: 'C4',
+            type: 'scatter',
+            data: kmeansSeriesData.d3
+          },
+          {
+            name: 'C5',
+            type: 'scatter',
+            data: kmeansSeriesData.d4
+          }
+        ]
+      })
     })
   }
 }
@@ -315,5 +407,9 @@ table td, table th {
   border: solid #000 1px;
   padding: 5px;
   text-align: left;
+}
+
+.chart{
+  height: 300px;
 }
 </style>
