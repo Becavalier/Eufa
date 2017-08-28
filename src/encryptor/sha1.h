@@ -42,7 +42,7 @@ extern "C" {
     #define ROTATE_LEFT(x, n) (((x) << (n)) | ((x) >> (32-(n))))
 
     /* W[i] */
-    #define W(i) ( tmp=x[(i-3)&15]^x[(i-8)&15]^x[(i-14)&15]^x[i&15], \
+    #define SHA1_W(i) ( tmp=x[(i-3)&15]^x[(i-8)&15]^x[(i-14)&15]^x[i&15], \
     	(x[i&15]=ROTATE_LEFT(tmp, 1)) )
 
     /* FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4. */

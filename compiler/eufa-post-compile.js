@@ -1,3 +1,6 @@
+__ATPRERUN__.push(() => {
+    FS.createPreloadedFile('/', 'mnist_network.mnist.dlib', '/static/mnist_network.mnist.dlib', true, true);
+});
 // Push callback into execution queue
 __ATPOSTRUN__.push(() => {
     // Alias
@@ -201,6 +204,26 @@ __ATPOSTRUN__.push(() => {
     // DLib
     Eufa.DLib.testcase_kmeans = () => {
         return Module.UTF8ToString(Module["asm"]["_testcase_kmeans"]());
+    }
+
+    Eufa.DLib.testcase_dnn = (pixelDataArray) => {
+        // Allocate memeory
+        var _buff = Module._malloc(pixelDataArray.length);
+        // Copy date to memeory
+        for (var i = 0; i < pixelDataArray.length; i++) {
+            Module.setValue(_buff + i, pixelDataArray[i], 'i8');
+        }
+
+        var result = Module["asm"]["_testcase_cnn_mnist"](_buff);
+
+        if (result > 10) {
+            result = JSON.parse(Module.UTF8ToString(Module["asm"]["_testcase_cnn_mnist"](_buff)));
+            console.log(result);
+        }
+        // Free up memory
+        Module._free(_buff);
+
+        return result;
     }
 
     callback && callback(Eufa);

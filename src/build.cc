@@ -11,6 +11,7 @@
 #include "cache/del.cc"
 #include "cache/clear.cc"
 #include "dlib/kmeans.cc"
+#include "dlib/dnn.cc"
 
 int main() {
     _INIT_EUFA_CACHE_RUNTIME();

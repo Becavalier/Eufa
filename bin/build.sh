@@ -36,19 +36,27 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
+    EMCC_DEBUG=1 em++ src/build.cc $_TSTRING \
+                      src/dlib/library/source.bc \
+                      \
                       -s ASSERTIONS=1 \
                       -s WASM=1 \
                       -s TOTAL_MEMORY=64MB \
+                      -s FORCE_FILESYSTEM=1 \
+                      -s DISABLE_EXCEPTION_CATCHING=0 \
+                      \
                       -O3 \
+                      \
                       -std=c++11 \
-                      -stdlib=libc++ \
+                      \
                       -I/usr/local/include -L/usr/local/lib \
+                      \
                       -o dist/eufa-module.js \
+                      \
                       --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY \
-                      -ltensorflow \
+                      --use-preload-plugins
 
-    # Output .wat
+    # Output .wast (.wat was prefered)
     if [ $(command -v wasm-dis) ]
     then
         wasm-dis ./dist/eufa-module.wasm $1> ./dist/eufa-module.wast

@@ -1,7 +1,10 @@
-"use strict";
+'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+__ATPRERUN__.push(function () {
+    FS.createPreloadedFile('/', 'mnist_network.mnist.dlib', '/static/mnist_network.mnist.dlib', true, true);
+});
 // Push callback into execution queue
 __ATPOSTRUN__.push(function () {
     // Alias
@@ -242,6 +245,26 @@ __ATPOSTRUN__.push(function () {
     // DLib
     Eufa.DLib.testcase_kmeans = function () {
         return Module.UTF8ToString(Module["asm"]["_testcase_kmeans"]());
+    };
+
+    Eufa.DLib.testcase_dnn = function (pixelDataArray) {
+        // Allocate memeory
+        var _buff = Module._malloc(pixelDataArray.length);
+        // Copy date to memeory
+        for (var i = 0; i < pixelDataArray.length; i++) {
+            Module.setValue(_buff + i, pixelDataArray[i], 'i8');
+        }
+
+        var result = Module["asm"]["_testcase_cnn_mnist"](_buff);
+
+        if (result > 10) {
+            result = JSON.parse(Module.UTF8ToString(Module["asm"]["_testcase_cnn_mnist"](_buff)));
+            console.log(result);
+        }
+        // Free up memory
+        Module._free(_buff);
+
+        return result;
     };
 
     callback && callback(Eufa);

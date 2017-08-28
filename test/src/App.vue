@@ -159,16 +159,20 @@
       <h3>DLib</h3>
       <table>
         <tr>
-          <th width="680">Method</th>
-          <th>Result</th>
+          <th width="380">Method</th>
+          <th>Input</th>
+          <th width="400">Result</th>
         </tr>
         <tr>
-          <td>Eufa.Dlib.testcase_kmeans()</td>
+          <td>Eufa.DLib.testcase_kmeans()</td>
+          <td>None</td>
           <td><div class="chart" ref="eufa_dlib_testcase_kmeans"></div></td>
         </tr>
+          <td>Eufa.DLib.testcase_dnn_mnist()</td>
+          <td><img src="/static/testcases/mnist_test_6.bmp"/></td>
+          <td>{{ dlib_dnn_mnist }}</td>
+        </tr>
       </table>
-
-
     </div>
   </div>
 </template>
@@ -236,7 +240,8 @@ export default {
       get_str: '',
       get_obj: '',
       get_arr: '',
-      get_none: ''
+      get_none: '',
+      dlib_dnn_mnist: ''
     }
   },
   created () {
@@ -290,17 +295,24 @@ export default {
       this.get_obj = eufa.Cache.get(this.params.cache_obj_key)
       this.get_arr = eufa.Cache.get(this.params.cache_arr_key)
       this.get_none = Object.prototype.toString.call(eufa.Cache.get(this.params.cache_none_key))
-      // Dlib.testcase_kmeans
+      // DLib.testcase_kmeans
       let kmeansPayload = JSON.parse(eufa.DLib.testcase_kmeans())
-      let kmeansSeriesData = {
-        'd0': [],
-        'd1': [],
-        'd2': [],
-        'd3': [],
-        'd4': []
-      }
+      let kmeansSeriesData = {}
+      let kmeansSeries = []
+      let kmeansLabel = new Set()
       kmeansPayload.forEach(row => {
+        kmeansLabel.add(`C${row[0]}`)
+        if (!kmeansSeriesData[`d${row[0]}`]) {
+          kmeansSeriesData[`d${row[0]}`] = []
+        }
         kmeansSeriesData[`d${row[0]}`].push([row[1], row[2]])
+      })
+      Array.from(kmeansLabel).forEach((row, index) => {
+        kmeansSeries.push({
+          name: `C${index}`,
+          type: 'scatter',
+          data: kmeansSeriesData[`d${index}`]
+        })
       })
       echarts.init(this.$refs.eufa_dlib_testcase_kmeans).setOption({
         title: {
@@ -327,7 +339,7 @@ export default {
           }
         },
         legend: {
-          data: ['C1', 'C2', 'C3', 'C4', 'C5'],
+          data: Array.from(kmeansLabel),
           left: 'center'
         },
         xAxis: [
@@ -354,34 +366,19 @@ export default {
             }
           }
         ],
-        series: [
-          {
-            name: 'C1',
-            type: 'scatter',
-            data: kmeansSeriesData.d0
-          },
-          {
-            name: 'C2',
-            type: 'scatter',
-            data: kmeansSeriesData.d1
-          },
-          {
-            name: 'C3',
-            type: 'scatter',
-            data: kmeansSeriesData.d2
-          },
-          {
-            name: 'C4',
-            type: 'scatter',
-            data: kmeansSeriesData.d3
-          },
-          {
-            name: 'C5',
-            type: 'scatter',
-            data: kmeansSeriesData.d4
-          }
-        ]
+        series: kmeansSeries
       })
+      // DLib.testcase_cnn_mnist
+      let img = new Image()
+      img.src = '/static/testcases/mnist_test_6.bmp'
+      img.onload = () => {
+        let canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height)
+        let pixelData = canvas.getContext('2d').getImageData(0, 0, img.width, img.height)
+        this.dlib_dnn_mnist = eufa.DLib.testcase_dnn(pixelData.data)
+      }
     })
   }
 }

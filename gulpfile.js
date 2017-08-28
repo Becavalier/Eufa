@@ -79,6 +79,12 @@ gulp.task('test', ['reset'], () => {
             gulp.src('dist/eufa-module.wasm')
                 .pipe(gulp.dest('test/static'))
                 .on('end', resolve);
+        }),
+        // Moving models.
+        new Promise(function(resolve, reject) {
+            gulp.src('src/dlib/model/mnist_network.mnist.dlib')
+                .pipe(gulp.dest('test/static'))
+                .on('end', resolve);
         })
     ]).then(() => {
         exec('cd test && npm run dev', function (err, stdout, stderr) {
