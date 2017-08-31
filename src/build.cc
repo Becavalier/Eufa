@@ -10,11 +10,13 @@
 #include "cache/get.cc"
 #include "cache/del.cc"
 #include "cache/clear.cc"
+#include "file/file.cc"
 #include "dlib/kmeans.cc"
 #include "dlib/dnn.cc"
 
 int main() {
     _INIT_EUFA_CACHE_RUNTIME();
+    _INIT_EUFA_FILE_RUNTIME();
 
     return 1;
 }

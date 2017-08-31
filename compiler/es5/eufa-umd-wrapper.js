@@ -96,8 +96,14 @@ var fetchWebAssemblyModuleBytes = function fetchWebAssemblyModuleBytes(url) {
 };
 
 // Mount
-Eufa.init = function (wasmSrc, callback) {
-    fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(function (bytes) {
+Eufa.init = function (options, callback) {
+    // Pre-process
+    if (!options.wasmStaticDir) {
+        throw '[Eufa] Initialization option "wasmStaticDir" required!';
+    }
+    options.wasmStaticDir = options.wasmStaticDir.slice(-1) === '/' ? options.wasmStaticDir : options.wasmStaticDir + '/';
+    Eufa.options = options;
+    fetchWebAssemblyModuleBytes(options.wasmStaticDir + (options.wasmCore || 'eufa-module.wasm'), EUFA_VERSION).then(function (bytes) {
         var Module = {};
         // Initilization wasm bytes
         Module["wasmBinary"] = bytes;

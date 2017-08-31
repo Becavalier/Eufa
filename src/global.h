@@ -5,13 +5,15 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <string.h>
-#include <cstdlib>
 #include <cmath>
 #include <emscripten/emscripten.h>
 // DLib
 #include <vector>
 #include <dlib/clustering.h>
 #include <dlib/rand.h>
+// File
+#include <queue>
+#include <map>
 
 #define TRUE 1
 #define FALSE 0

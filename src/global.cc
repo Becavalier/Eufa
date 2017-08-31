@@ -1,8 +1,8 @@
 #include "global.h"
 
 #ifdef __cplusplus
-extern "C" {
-#endif
+      extern "C" {
+      #endif
 
     size_t EMSCRIPTEN_KEEPALIVE sizeof_type_double () {
         return sizeof(double);

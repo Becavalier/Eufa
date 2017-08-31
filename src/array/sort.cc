@@ -46,7 +46,7 @@ extern "C" {
         return sortArray;
     }
 
-    double* EMSCRIPTEN_KEEPALIVE num_sort (double array[], unsigned long length) {
+    double* EMSCRIPTEN_KEEPALIVE num_sort (double array[], double length) {
         return quicksort (array, 0, length - 1);
     }
 

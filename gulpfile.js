@@ -25,8 +25,8 @@ gulp.task('default', () => {
             gulp.src([basedir + program.w])
                 .pipe(gulpReplace('// [ REPLACEMENT_PLACEHOLDER ]', data))
                 // To fix for node context start
-                .pipe(gulpReplace('require("fs")', 'null'))
-                .pipe(gulpReplace('require("path")', 'null'))
+                .pipe(gulpReplace(/require\("fs"\)/g, 'null'))
+                .pipe(gulpReplace(/require\("path"\)/g, 'null'))
                 // To fix for node context end
                 .pipe(gulp.dest('./dist/'))
                 .on('end', resolve);
@@ -77,6 +77,11 @@ gulp.task('test', ['reset'], () => {
         }),
         new Promise(function(resolve, reject) {
             gulp.src('dist/eufa-module.wasm')
+                .pipe(gulp.dest('test/static'))
+                .on('end', resolve);
+        }),
+        new Promise(function(resolve, reject) {
+            gulp.src('dist/eufa-asyn-worker.js')
                 .pipe(gulp.dest('test/static'))
                 .on('end', resolve);
         }),

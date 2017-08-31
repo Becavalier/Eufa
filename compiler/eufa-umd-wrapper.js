@@ -87,8 +87,14 @@ let fetchWebAssemblyModuleBytes = (url, dbVersion = EUFA_VERSION) => {
 }
 
 // Mount
-Eufa.init = (wasmSrc, callback) => {
-    fetchWebAssemblyModuleBytes(wasmSrc, EUFA_VERSION).then(bytes => {
+Eufa.init = (options, callback) => {
+    // Pre-process
+    if (!options.wasmStaticDir) {
+        throw '[Eufa] Initialization option "wasmStaticDir" required!';
+    }
+    options.wasmStaticDir = options.wasmStaticDir.slice(-1) === '/' ? options.wasmStaticDir : options.wasmStaticDir + '/';
+    Eufa.options = options;
+    fetchWebAssemblyModuleBytes(options.wasmStaticDir + (options.wasmCore || 'eufa-module.wasm'), EUFA_VERSION).then(bytes => {
         let Module = {};
         // Initilization wasm bytes
         Module["wasmBinary"] = bytes;

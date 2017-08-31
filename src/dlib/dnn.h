@@ -5,6 +5,7 @@
 #include <dlib/dnn.h>
 #include <dlib/data_io.h>
 
+
 // #define MNIST_DEBUG
 
 using namespace std;
@@ -14,13 +15,15 @@ extern "C" {
 
     #ifdef MNIST_DEBUG
 
-    extern const char* testcase_cnn_mnist(unsigned char[]);
+    extern const char* testcase_dnn_mnist(unsigned char[]);
 
     #else
 
-    extern unsigned long testcase_cnn_mnist(unsigned char[]);
+    extern unsigned long testcase_dnn_mnist(unsigned char[]);
 
     #endif
+
+    extern void testcase_dnn_mnist_train(const char* dir);
 }
 
 #endif

@@ -46,22 +46,22 @@ extern "C" {
     	(x[i&15]=ROTATE_LEFT(tmp, 1)) )
 
     /* FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4. */
-    #define FF(a, b, c, d, e, w) { \
+    #define SHA1_FF(a, b, c, d, e, w) { \
      (e) += SHA1_F ((b), (c), (d)) + (w) + (uint32_t)(0x5A827999); \
      (e) += ROTATE_LEFT ((a), 5); \
      (b) = ROTATE_LEFT((b), 30); \
     }
-    #define GG(a, b, c, d, e, w) { \
+    #define SHA1_GG(a, b, c, d, e, w) { \
      (e) += SHA1_G ((b), (c), (d)) + (w) + (uint32_t)(0x6ED9EBA1); \
      (e) += ROTATE_LEFT ((a), 5); \
      (b) = ROTATE_LEFT((b), 30); \
     }
-    #define HH(a, b, c, d, e, w) { \
+    #define SHA1_HH(a, b, c, d, e, w) { \
      (e) += SHA1_H ((b), (c), (d)) + (w) + (uint32_t)(0x8F1BBCDC); \
      (e) += ROTATE_LEFT ((a), 5); \
      (b) = ROTATE_LEFT((b), 30); \
     }
-    #define II(a, b, c, d, e, w) { \
+    #define SHA1_II(a, b, c, d, e, w) { \
      (e) += SHA1_I ((b), (c), (d)) + (w) + (uint32_t)(0xCA62C1D6); \
      (e) += ROTATE_LEFT ((a), 5); \
      (b) = ROTATE_LEFT((b), 30); \

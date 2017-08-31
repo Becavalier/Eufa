@@ -245,7 +245,9 @@ export default {
     }
   },
   created () {
-    eufa.init('static/eufa-module.wasm', () => {
+    eufa.init({
+      wasmStaticDir: 'static/'
+    }, () => {
       console.log(eufa)
       window.Eufa = eufa
       // Call directly
@@ -368,7 +370,7 @@ export default {
         ],
         series: kmeansSeries
       })
-      // DLib.testcase_cnn_mnist
+      // DLib.testcase_dnn_mnist
       let img = new Image()
       img.src = '/static/testcases/mnist_test_6.bmp'
       img.onload = () => {

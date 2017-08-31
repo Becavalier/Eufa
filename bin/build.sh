@@ -3,9 +3,10 @@
 # Global
 EUFA_SOURCE_FOLDER='compiler/es5'
 
-EUFA_BABEL_TRANSFORM_LIST='eufa-post-compile.js eufa-umd-wrapper.js eufa-library.js'
+EUFA_BABEL_TRANSFORM_LIST='eufa-post-compile.js eufa-umd-wrapper.js eufa-library.js eufa-asyn-worker.js'
 EUFA_POST_COMPILE_EMBED_LIST='eufa-post-compile.js'
 EUFA_LIBRARY='eufa-library.js'
+EUFA_WORKER='eufa-asyn-worker.js'
 
 # Gulp flags
 EUFA_UMD_WRAPPER='eufa-umd-wrapper.js'
@@ -36,25 +37,30 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=1 em++ src/build.cc $_TSTRING \
-                      src/dlib/library/source.bc \
+    EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
                       \
                       -s ASSERTIONS=1 \
+                      -s SAFE_HEAP=1 \
                       -s WASM=1 \
                       -s TOTAL_MEMORY=64MB \
                       -s FORCE_FILESYSTEM=1 \
                       -s DISABLE_EXCEPTION_CATCHING=0 \
+                      -s EMULATE_FUNCTION_POINTER_CASTS=0 \
+                      -s ALIASING_FUNCTION_POINTERS=0 \
                       \
-                      -O3 \
+                      -O2 \
+                      -g4 \
                       \
                       -std=c++11 \
                       \
-                      -I/usr/local/include -L/usr/local/lib \
+                      -I/usr/local/include \
+                      -L/usr/local/lib \
                       \
                       -o dist/eufa-module.js \
                       \
                       --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY \
-                      --use-preload-plugins
+                      --use-preload-plugins \
+                      -Werror
 
     # Output .wast (.wat was prefered)
     if [ $(command -v wasm-dis) ]
@@ -71,6 +77,7 @@ fi
 
 # Copying main files
 cp compiler/es5/$EUFA_UMD_WRAPPER ./dist/$EUFA_UMD_WRAPPER
+cp compiler/es5/$EUFA_WORKER ./dist/$EUFA_WORKER
 
 
 # Combining and replacing

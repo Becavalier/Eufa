@@ -8,7 +8,7 @@ using namespace std;
 
 extern "C" {
 
-    extern double* num_sort (double array[], unsigned long length);
+    extern double* num_sort (double array[], double length);
 
 }
 
