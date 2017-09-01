@@ -305,10 +305,13 @@ __ATPOSTRUN__.push(function () {
             _ksize = _Eufa$Helper$cache_ma2[1];
 
         if (Object.prototype.toString.call(value) === '[object Number]') {
+            console.log('[Eufa] A cache of number set.');
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_NUM);
             Module["asm"]["_cache_set_kv_num"](_kbuff, value);
         }
         if (Object.prototype.toString.call(value) === '[object String]') {
+            console.log('[Eufa] A cache of string set.');
+
             var _Eufa$Helper$cache_ma3 = Eufa.Helper.cache_malloc_str(value),
                 _Eufa$Helper$cache_ma4 = _slicedToArray(_Eufa$Helper$cache_ma3, 2),
                 _vbuff = _Eufa$Helper$cache_ma4[0],
@@ -318,6 +321,8 @@ __ATPOSTRUN__.push(function () {
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Array]') {
+            console.log('[Eufa] A cache of array set.');
+
             var _Eufa$Helper$cache_ma5 = Eufa.Helper.cache_malloc_str(JSON.stringify(value)),
                 _Eufa$Helper$cache_ma6 = _slicedToArray(_Eufa$Helper$cache_ma5, 2),
                 _vbuff = _Eufa$Helper$cache_ma6[0],
@@ -327,6 +332,8 @@ __ATPOSTRUN__.push(function () {
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Object]') {
+            console.log('[Eufa] A cache of object set.');
+
             var _Eufa$Helper$cache_ma7 = Eufa.Helper.cache_malloc_str(JSON.stringify(value)),
                 _Eufa$Helper$cache_ma8 = _slicedToArray(_Eufa$Helper$cache_ma7, 2),
                 _vbuff = _Eufa$Helper$cache_ma8[0],

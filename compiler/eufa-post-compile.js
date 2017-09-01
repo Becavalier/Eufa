@@ -269,20 +269,24 @@ __ATPOSTRUN__.push(() => {
     Eufa.Cache.set = (key, value) => {
         var [_kbuff, _ksize] = Eufa.Helper.cache_malloc_str(key.toString());
         if (Object.prototype.toString.call(value) === '[object Number]') {
+            console.log('[Eufa] A cache of number set.');
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_NUM);
             Module["asm"]["_cache_set_kv_num"](_kbuff, value);
         }
         if (Object.prototype.toString.call(value) === '[object String]') {
+            console.log('[Eufa] A cache of string set.');
             var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(value);
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_STR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Array]') {
+            console.log('[Eufa] A cache of array set.');
             var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(JSON.stringify(value));
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_ARR);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);
         }
         if (Object.prototype.toString.call(value) === '[object Object]') {
+            console.log('[Eufa] A cache of object set.');
             var [_vbuff, _vsize] = Eufa.Helper.cache_malloc_str(JSON.stringify(value));
             Module["asm"]["_cache_set_type"](_kbuff, EUFA_CACHE_TYPE_OBJ);
             Module["asm"]["_cache_set_kv_str"](_kbuff, _vbuff);

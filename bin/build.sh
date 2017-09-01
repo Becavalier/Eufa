@@ -39,8 +39,8 @@ then
 
     EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
                       \
-                      -s ASSERTIONS=1 \
-                      -s SAFE_HEAP=1 \
+                      -s ASSERTIONS=0 \
+                      -s SAFE_HEAP=0 \
                       -s WASM=1 \
                       -s TOTAL_MEMORY=64MB \
                       -s FORCE_FILESYSTEM=1 \
@@ -48,8 +48,7 @@ then
                       -s EMULATE_FUNCTION_POINTER_CASTS=0 \
                       -s ALIASING_FUNCTION_POINTERS=0 \
                       \
-                      -O2 \
-                      -g4 \
+                      -O3 \
                       \
                       -std=c++11 \
                       \
