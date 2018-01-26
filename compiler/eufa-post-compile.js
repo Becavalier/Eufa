@@ -349,6 +349,9 @@ __ATPOSTRUN__.push(() => {
     }
 
     Eufa.DLib.testcase_dnn_mnist_train = (folderName) => {
+        if (!folderName) {
+            console.error("[Eufa] Empty training folders.");
+        }
         let [_f_buff, _f_size] = Eufa.Helper.malloc_str(folderName);
         Module["asm"]["_testcase_dnn_mnist_train"](_f_buff);
         Module._free(_f_buff);
