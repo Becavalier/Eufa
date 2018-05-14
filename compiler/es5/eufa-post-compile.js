@@ -408,6 +408,10 @@ __ATPOSTRUN__.push(function () {
     };
 
     Eufa.DLib.testcase_dnn_mnist_train = function (folderName) {
+        if (!folderName) {
+            console.error("[Eufa] Empty training folders.");
+        }
+
         var _Eufa$Helper$malloc_s9 = Eufa.Helper.malloc_str(folderName),
             _Eufa$Helper$malloc_s10 = _slicedToArray(_Eufa$Helper$malloc_s9, 2),
             _f_buff = _Eufa$Helper$malloc_s10[0],

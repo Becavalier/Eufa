@@ -37,7 +37,7 @@ then
         _TSTRING="${_TSTRING} --post-js $EUFA_SOURCE_FOLDER/$file"
     done
 
-    EMCC_DEBUG=1 emcc src/build.cc $_TSTRING \
+    emcc src/build.cc $_TSTRING \
                       \
                       -s ASSERTIONS=0 \
                       -s SAFE_HEAP=0 \
@@ -59,7 +59,7 @@ then
                       \
                       --js-library $EUFA_SOURCE_FOLDER/$EUFA_LIBRARY \
                       --use-preload-plugins \
-                      -Werror
+                      # -Werror
 
     # Output .wast (.wat was prefered)
     if [ $(command -v wasm-dis) ]
