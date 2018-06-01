@@ -117,7 +117,7 @@ npm run benchmark
 
 > Eufa.Cache.clear\<\>
 
-## Tools (Pending)
+## Tools (WIP)
 Eufa try embedding some useful wasm profiling tools which wrote in Python, feel free to use them according to the following documentation.
 
 ### Installation
@@ -137,5 +137,5 @@ eufa-ds --module <path-to-module>
 ## Copyright
 
 The Eufa, MIT License.
-
 The PHP License, version 3.01.
+
